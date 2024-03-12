@@ -1,0 +1,251 @@
+Execution context.
+------------------
+
+- Everything in JS happens inside an execution context.
+- Execution context is like a box and it has two components:
+1. Memory component.(Variable Environment)
+   All the variables and functions are stored as key value pairs.
+2. Code component.(Thread of execution)
+   This is the place wwhere code is executed one line at a time.
+   "JS is a synchronous single-threaded language." - means, JS can only execute one line at a time in a specific order. It can only go to next line once the curreent line has be finished executing.
+   
+What happens when you run a JS program?
+A) An execution context is created.
+
+Execution context is created in two phases:
+1) Creation phase(Memory creation phase)
+   Here the memory will be allocated to variables and functions. And it stores a special value which is known as undefined. In case of function it literally stores the whole code of the function as it is.
+
+2) Code execution phase
+  In this phase JS will again runs throught this whole JS program line by line. This phase will allocate the real value of that variable by replacing the initially added undefined. ALso all calculations happens in the code execution phase.
+  In the code execution phase if we run(call a function) a function, a new execution context will be created inside the global execution context.
+  That execution context will have both memory and code component.
+  
+  - Function execution context.
+    Inside the function execution context, it works same as in the global execution context with 2 phases.
+    In the first phase inside the function, it will allocate memory for parameters, variables and function.
+    The return in function will tells that the function has executed and now return the control of the program to the place where the function was invoked.
+    As soon as we return the value the whole execution context of the function will be deleted.
+    
+Once JS is done with everything and the whole program is deleteed, then the whole global execution context is deleteed.    
+
+Call Stack
+----------
+To manage the execution context, creation, deletion, and control it manages a stack, it is known as call stack. It is only for managing execution context.
+GLobal execution context will be at the bottom and if s function is executed the function execution context will be stacked on top of global execution context. And afteer when the function execution contex has conpeted(execution contex is deleted.) the function execution context will be moved out of the stack.
+
+Call stack maintains the order of execution of execution context.
+Call stack is also known as execution context stack, program stack, control stack, runtime stack, machine stack.
+---------------------------------
+Hoisting
+--------
+
+HOISTING IS A phinominon in JS, where we can access the variables and functions even before we put some values to it.
+As because of the execution context, the JS variables and functions will be allocated momory even before executing it.
+So at the first phase of the execution context, the memory space will be alocated for variable with undefined and function with the function itself.
+
+
+console.log(name);
+myAddress();
+
+var name = "Sujith";
+
+function myAddress(){
+    console.log("My Address");
+}
+
+So, in the above code, during the execution(in the second phase), the variable will look for the variable in the memory. SInce the variable is given undefined, the undefined will be printed. And the function will be executed. iT IS ONLY AFTER that the real value will be assigned to the variable.
+---------------------------------------
+
+WIndow
+------
+Window is a global object which is created along with the global execution context. 
+At the global level, this keyword is equal to window.
+
+Whenever we create any variable or function in the global space, this will ge attached to the window.
+
+
+var a = 2
+
+console.log(window.a);
+console.log(a);
+console.log(this.a);
+--------------------------------------
+
+Undefined VS not-defined
+------------------------
+
+With not defined, the memory will not be allocated, for the variable. With undefined, the momory will be allocated, but would not have provided the value.
+
+We cannot assign undefined to a variable. a = undefined is not good.
+
+-------------------------------------------------
+
+Scope chain, scope & Lexical environment
+----------------------------------------
+1.
+function a(){
+   c();
+   function c(){
+       console.log(b);
+   }
+}
+var b = 10;
+a();
+
+2.
+function a(){
+   var b = 10;
+   c();
+   function c(){
+       
+   }
+}
+
+a();
+console.log(b);
+In the 1st code, the inner function can access the value of b. But in the second code, we cannot access b.
+
+Scope means where we can access specific variable or a function in a code.
+
+lexical environment ->
+scope is directly dependent on the lexical environment.
+Whenever an exicution context is created, a lexical environment is also created.
+lexical environment is the local memory along with the lexical environment of its parent.
+
+. A lexical Environment is a data structure that holds an identifier-variable mapping. (here identifier refers to the name of variables/functions, and the variable is the reference to the actual object [including function type object] or primitive value). The lexical environment contains two components:
+
+In global level the reference to the outer environment points to null BECAUSE IT has no parentt.
+
+Environment record: It is the actual place where the variable and function declarations are stored.
+Reference to the outer environment: It means it has access to its outer (parent) lexical environment.
+
+Scope chain -> 
+chain of lexical environment is called scope chain.
+----------------------------------------------------------------
+
+let & const
+-----------
+
+let and const declaration are hoisted. 
+But we cannot access the let and const variable before declaration is because, let and const are stored in the different memory space during hoisting.
+
+- Temporal dead zone is the time a variable is hoisted and till it is initialize some value is called temporal dead zone.
+
+Whenever i try to access a vairable inside a temporal dead zone it gives reference error. We cannot access a variable declared before let and const before initialisation.
+
+Var vs let - using var, we can redeclare a variable. Using let, we cannot redeclare a variable.
+             for var block scope is not applied. var variable can be accessed from outside the block.
+             JS will give syntax error if we redeclare avariable with let.
+We cannot access a varibale declared with let from window object.
+
+> in case of const we cANNOT redeclare, or reinitialize.
+  In const if we try to redeclare, it will give us type error.
+  In const, we have to initialise and declare the variable at the same time. Else it will give a syntax eror.
+
+----------------------------------------------------------------
+
+block
+------
+{
+
+}
+
+block is also known as compound statement.
+Block will combine the multiple JS statement into a group.
+We group multiple statements to a group where JS expects one statement. Like in if statement.
+
+block scope - What all variables and functions we can access inside this scope.
+let and const are in block scope, it cannot be accessed outside the block if it is declared inside a block.
+-----
+shadowing - If we have same named variable outside the block scope then the inner variable will shadow the outer variable.
+
+var a = 100;
+{
+  var a = 10;
+  console.log(a);
+}
+
+Here, the output printed will be 10.
+
+But in the above code, if we try to access a from outside the scope, then a will be 10. because it actually modifies a to 10. Because var has no block scope. But if a is declared with let then the value of global a will not be changed.
+
+shadowing is not only part of block it also works in functions.
+
+Illegal shadowing - 
+let a = 20;
+{
+var a = 20;
+}
+We cannot shadow a let using var and it is illegal shadowing.
+
+But we can shadow var using let. No error will occure.
+
+- var is a function scope.
+SO we can declare variables like this - 
+let a = 20;
+function x(){
+var a = 20;
+}
+
+------
+
+ - Block scope also follows lexical scope
+-----------------------------------------------
+
+Closures
+---------
+A closure gives you access to an outer functions scope from an inner function. IN js, closure are created every timw a function is created, at function creation time.
+
+function x(){
+    var a = 7;
+    function y(){
+    console.log(a);
+    }
+    y();
+}
+x();
+
+function along with its lexical scope bundled together is knowm as closure.
+
+eg of returning a function: - 
+
+function x(){
+    var a = 7;
+    function y(){
+    console.log(a);
+    }
+    return y();
+}
+
+
+var z = x();
+
+z();
+
+Here we are returning function y from function x.
+And if we run the function z it will execute the function y which has been returned.
+Because, if a function returns from another function the function y remember its lexical scope and it has access to all the variable in its scope. SO a function along with its lexical is returned.
+
+------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

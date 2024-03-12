@@ -1,0 +1,1668 @@
+> Arithmetic Operator
+
++, -, *, /, **(exponential, eg: students = students ** 2), %
+
+Augmented assignment operator - is used to combine student=student+1 like operations.
++=, -=, *=, /=, **=, %=
+
+----------------------------
+> Operator precedence
+
+1. parenthesis ()
+2. exponents
+3. multiplication & division & modulo
+4. addition & subtraction
+
+----------------------------
+> User Input
+
+1. let username = window.prompt("ENter your username!") - A text box will appear at the window to enter text.
+
+2. using html input tag. and taking that input using JS.
+
+// submit btn
+let btn = document.getElementById("mySubmit");
+// input 
+let txt = document.getElementById("myH1");
+
+//onclick event
+btn.onclick = function(){
+    let inputTxt = document.getElementById("myText").value;
+    txt.innerText = inputTxt;
+
+}
+-------------------------------
+
+> Type conversion
+
+x = Number(x);
+y = String(y);
+z = Boolean(z);
+
+If we try to convert a string like "sujith" to a number, then the output will be NaN. but "3" wil be converted to a a number.
+
+If an empty string is converted:
+    to a number, the output will be zero.
+    to a boolean datatype, the output will be false
+
+if we try to convert uninitialized value:
+     to number, the utput will be NaN
+     to string, undefined
+     to boolean, false
+     
+--------------------------------     
+
+> Math - is a build-in object that provides a collection of mathematical properties and method.
+
+Math.PI
+Math.round(x) - to round a number to the nearest integer.
+Math.floor(x) - always rounds down to the nearest integer.
+let x = 4.99;
+z = Math.floor(x);
+Output: 4
+Math.ceil(x) -  is used to round a number up to the nearest integer.
+Math.trunc(x) - to eliminate decimal portion.
+Math.pow(x, y) - means x raise to y.
+Math.sqrt(x)
+Math.log(x) - to find natural logarithm.
+Math.sign(x) - if sign is -, the out will be -1. If positive, the output will be 1. If it is zero, output eill be 0.
+Math.max(x, y, z) - will find the maximum value from a set of variable.
+Math.min(x, y, z)
+---------------------------------
+
+> Random number generator
+
+let randomNumber = Math.random() * 6;
+This will generate random number between 0 and 1.
+
+let randomNumber = Math.floor(Math.random() * 6);
+multiplying 6 to this will give a random number between 0 and 6.
+
+-----------------------------------
+> checked property
+
+checked property in js is used to check if a user has selected or clicked in checkbox or in a radio button.
+
+---------------------------------
+> Ternary operator
+
+A shortcut to if and else statements.
+
+condition ? codeIfTrue : codeIfFalse
+
+-> Assigning value to a variable based on the condition using ternary operator.
+let purchaseAmount = 125;
+let discount = purchaseAmount>=100 ? 10 : 0;
+console.log(discount);
+----------------------------------
+> String methods
+let username = "Sujith";
+
+- username.indexOf("o") = this will give the index value of o in the first occurancr.
+
+- username.lastIndexOf("o") - This will give th indexvalue of o in the last occurance.
+
+- length property is used to find the length of a string.
+
+- username.trim() - is used to remove the white space before and after the string.
+
+- username.toUpperCase() - to make all the string to uppercase letter.
+slice
+- username.toLowerCase()
+
+- username.repeat(2) - this will repeat the string 2 times
+
+- username.startsWith("B") - to determine if a string starts with a specific character, we can use this method. This method will return a boolean value (true or flase).This can be usedto check if a string like username starts with a white space.
+
+- username.endsWith("e")
+
+- username.includes(" ") - This will look for a specific inclusion of a character or a white space in a string and returns true if it find the match.
+
+- username.replaceAll("c", "K"); - this is to replace a specific character with a specific character. The first parameter is the value we want to replace, and the second parameter is the value we are puuting in place of replaced value.
+
+-username.padStart(15, "0") - Here it adds 0 to the start of the string until the string become 15 character long.
+
+-username.padEnd(16, "0")
+-------------------------------------------
+
+> String slicing
+Create a substring from a portion of another string. It wont alter the original string.
+syntax: string.slice(start, end)
+
+let username = "Bro-code";
+
+let firstName = username.slice(0, 3);
+let lastName = username.slice(4, 8);
+
+console.log(firstName);
+console.log(lastName)
+-----
+To make the above code dynamic, according to the name changes:
+let username = "Bro code";
+
+let firstName = username.slice(0, username.indexOf(" "));
+let lastName = username.slice(username.indexOf(" ") + 1);
+
+console.log(firstName);
+console.log(lastName);
+We take space and indexOf to make it dynamic.
+-----
+
+- let myName = username.slice(-1); -> this will print the last value.
+- let myName = username.slice(-2); -> this will print the last second value.
+ 
+-----
+If we give only one value as argument, then it will take the position from that index value and the last of the string.
+
+let firstName = username.slice(2);
+-----------------------------------------------
+> splice (in array)
+
+Splice is used to remove, or add element at a specific position. And using splice will affect the original array.
+
+let fruits = ['apple', 'banana', 'orange', 'grape'];
+
+// Remove 1 element starting from index 1
+let removedElement = fruits.splice(1, 1);
+console.log(fruits);  // Output: ['apple', 'orange', 'grape']
+console.log(removedElement);  // Output: ['banana']
+
+// Add elements at index 1 without removing any
+fruits.splice(1, 0, 'mango', 'kiwi');
+console.log(fruits);  // Outconst email = "sujith@gmail.com";
+
+let username = email.slice(0, email.indexOf("@"))
+
+console.log(username);put: ['apple', 'mango', 'kiwi', 'orange', 'grape
+-----------------------------------------------
+
+> Method chaining -> calling one method after another in one continuous line of code.
+ 
+ myName = myName.trim();
+let firstLet = myName.slice(0, 1);
+firstLet = firstLet.toUpperCase()
+
+let extraChar = myName.slice(1);
+extraChar = extraChar.toLowerCase();
+
+
+myName = firstLet + extraChar;
+
+console.log(myName);
+
+The above code will take a string and convert the first letter to upper cae and remaining to lower case.This same thing can be done in a single line by placing methods one after the other. And it is known as method chaining.
+
+myName = myName.trim().slice(0, 1).toUpperCase() + myName.slice(1).toLowerCase()
+-------------------------------------------------
+> Strict equality
+
+= assignment operator
+== comparison operator (compare if values are equal)
+=== strict equality operator (compare if values and datatype are equal)
+!= inequality operator
+!== strict inequality operator
+-------------------------------------------------
+Array in JS
+-----------
+
+array.push("grapes"); - this method will push new element to the last of the array.
+array.pop() - will remove the last element in the array.
+array.unshift("orange") - this will add new element to the beginning of an array.
+array.shift() - this will remove an element from the beginning.
+
+array.length - this property will give the length of an arrray.
+
+let index = array.indexOf("apple"); - this will give the index of the specific element.
+    If it returns -1, then that element has noot been found.
+----
+array.join() -
+const fruits = ["apple", "banana", "orange"];
+const joinedString = fruits.join(); // "apple,banana,orange"   
+
+Its primary purpose is to combine all the elements of an array into a single string, separated by a specified separator (or a comma by default). 
+
+We can specify how it must be joined, by passing it as an argumrnt
+fruits.join(" "), fruits.join("-") 
+    
+------  
+> for...of loop in array
+
+It is used to iterate through an array. It can be considered as the short form of for loop.    
+
+let fruits = ["apple", "orange", "banana"];
+
+for(let fruit of fruits){
+    console.log(fruit);
+}
+------
+
+To sort an array in alphabetic order:
+
+fruits.sort()
+
+------
+
+To sort an array in reverse order:
+
+fruits.sort().reverse()
+
+-----------------------------------------------------
+Spread operator
+--------------
+Spread operator can be used to unpack the elements. Spread operator can be used to copy an array to another array. It can also be used with objects and string.
+
+syntax: ...arrayName or ...stringName
+
+let fruits = ["apple", "orange", "banana"];
+let keralaFruits = [...fruits, "grapes", "coconut"];
+console.log(keralaFruits);
+
+It will only take the elements of an array and swill place it to another array.
+
+> Spread operator can br used with string to change string elements to an array of charater.
+
+let myName = "Sujith";
+
+const charArray = [...myName];
+
+console.log(charArray);
+
+
+>SPread operator with objects
+
+const obj1 = { name: "Alice", age: 30 };
+const obj2 = { job: "Developer", city: "New York" };
+
+const mergedObject = { ...obj1, ...obj2 }; 
+------------------------------------------------------
+
+rest parameters
+---------------
+
+Rest is used in function to pass more than one arguments using a single parameter.(...args)
+It allows a function works with a variable number of arguments by bundling them into an array.
+
+spread = expands an array into seperate elements 
+rest = bundles seperate element into an array.
+
+function openFridge(...foods){
+    return foods;
+}
+
+const food1 = "pizza";
+const food2 = "hamburger";
+const food3 = "hotdog";
+const food4 = "sushi";
+const food5 = "ramen";
+
+
+const foods = openFridge(food1, food2, food3, food4, food5);
+console.log(foods);
+
+-> Destructuring can br done like:
+   function openFridge(food1, food2, ...foods){
+        return foods;
+   }
+    Here we take food1 and food2 to variable, and rest of the parameters will be in array.
+
+-----
+FInding sum using rest parameter:
+function sum(...numbers){
+    let result = 0;
+
+    for(let num of numbers){
+        result += num;
+    }
+
+    return result;
+}
+
+const total = sum(2,5);
+
+console.log(`Total is Rs ${total}`);
+-----
+Combining seperate string into one:
+function sentence(...sent){
+    const joinedSentence = sent.join("-")
+    console.log(joinedSentence);
+}
+sentence("My", "name", "is", "Sujith", "V S");
+
+-------------------------------------------------------
+Callback function
+-----------------
+bard link - https://g.co/gemini/share/61285ff4a1c0
+
+A callback is a function that is passed as an argument to another function.
+It is used to handle asynchronous operation like reading a file, network requests, intreracting with databases. Using callback we can make sure that a function executes after the asynchronous processes are complete and not before.
+
+Callback functions can be used in,
+- handling asynchronous operations
+  JavaScript is single-threaded, meaning it can only execute one task at a time. However, many operations in web development, like fetching data from servers or waiting for user input, are asynchronous. This implies they don't block the main thread while waiting for completion.
+
+Callbacks provide a mechanism to specify a function that will be executed after an asynchronous operation finishes. This allows the main thread to continue processing other tasks while the asynchronous operation is ongoing. Once the operation is complete, the callback function is invoked with the results, enabling you to handle the response or perform further actions.
+- event handling.
+  
+- higher order function
+
+
+Eg:
+hello(goodbye);
+
+function hello(callback){
+    setTimeout(function(){
+        console.log("Hello");
+        callback();
+    }, 3000);
+}
+
+function goodbye(){
+    console.log("Goodbye!");
+}
+
+Here we are passing goodbye as a callback function. Because, if we do not pass it as  a callback function then, the goodbye will be called first and ony the hello will be printed. BUt after we pass goodbywe as the callback function, the hello will be printed first and then only the goodbye function is called.
+
+Eg: to find sum.
+
+sum(displayResult, 4, 6);
+
+
+function sum(callback, x, y){
+    let result = x + y;
+    callback(result);
+
+}
+
+function displayResult(result){
+    console.log(result);
+
+}
+
+-------------------------------------------slice
+.forEach()
+---------
+
+method used to iterate over the elements of an arry and apply a specified function(callback) to each 				element
+
+syntax:
+
+array.forEach(callback)
+element, index, array are provided.
+
+
+eg:-
+
+let fruits = ["apple", "orange", "banana", "coconut"];
+
+fruits.forEach(upperCase);
+fruits.forEach(display)
+
+
+function upperCase(element, index, array){
+    array[index] = element.toUpperCase();
+}
+
+
+function display(element){
+    console.log(element);
+}
+
+--------------------------------------------
+
+.map()
+------
+
+Accept a callback and applies that function to each element of an array, then return a new array.
+
+
+function square(element){
+    return Math.pow(element, 2);
+}
+
+const numbers = [1, 2, 3, 4, 5];
+
+const result = numbers.map(square);
+
+console.log(result);
+
+
+or
+
+const numbers = ["cat", "dog", "horse", "cow"];
+
+const result = numbers.map(upperCase);
+
+
+console.log(result);
+
+function upperCase(element){
+    return element.toUpperCase();
+}
+
+map method is very similar to forEach but after completion the math method will return a new array.
+
+----------------------------------------
+
+.filter() = create a new array by filtering out elements.
+
+Eg:-
+let numbers = [1,2,3,4,5,6,7,8];
+
+let evenNums = numbers.filter(isEvent);
+
+console.log(evenNums);
+
+function isEvent(element){
+    return element % 2 === 0;
+}
+
+The filter method will take any values that return true. And it wont filter out from the array that doesn't return true.
+
+
+or
+to filter out the age below 18.
+
+let ages = [16, 17, 18, 19, 18, 20, 60];
+
+let filteredStudents = ages.filter(function (element){
+    return element >= 18;
+
+});
+
+console.log(filteredStudents);
+
+-----------------------------------------
+
+.reduce()
+
+it reduce the element of an array to s single value.
+The reduce method in JavaScript is a powerful tool for processing an array and accumulating its elements into a single value. It iterates through the array, applying a provided function (called the reducer function) to each element and an accumulator value, which is then used in the next iteration.
+
+let num = [1,2,3,4,5,6,7];
+
+const sum = num.reduce(function(accumulator, element){
+    return accumulator + element;
+}, 0)
+
+console.log(sum);
+
+------------------------------------------
+function expression  
+-------------------
+-----
+function declaration - defines a reusable block of code that performs a specific task.
+
+function hello(){
+    console.log("Hello");
+}
+-----
+function expression - a way to define function as a value or a variables.
+
+const hello = function(){
+    console.log("Hello");
+}
+To invoke it, we have to use hello()
+
+function can be treeted as a value by passing entire function to another function.(anonymous function).
+
+const squares = numbers.map(function(element){
+    return Math.pow(element, 2);
+
+})
+
+-------------------------------------
+
+Arrow function
+--------------
+
+A concise way to write function expresssions.
+
+const hello - (name, age) => {console.log("")
+                              console.log("")};
+
+setTImeout(() => {
+
+}, 3000)
+
+arrow function also has return value.
+
+--------------------------------------
+
+Javascript Object
+
+a collection of related properties anf methods. Cna represent real world objects(people, products and places)
+
+object = {key:value}
+
+Eg:-
+
+const person1 = {
+    firstName:"Sujith",
+    lastName: "Suresh",
+    age: 20,
+    isEmployed: true,
+}
+
+Objects can have methods as value.
+
+const person1 = {
+    firstName:"Sujith",
+    lastName: "Suresh",
+    age: 20,
+    isEmployed: true,
+    talk: function(){console.log("Hi, I am sujith")}
+
+}
+
+In arrow function.
+talk: () => console.log("Hi, I am sujith")
+
+---------------------------------------
+this in JS
+----------
+it refers to the object where this is used.
+
+const person1 = {
+    name:"Sujith",
+    lastName: "Suresh",
+    age: 20,
+    isEmployed: true,
+    talk: function(){console.log(`My name is ${this.name}`)}
+}
+
+this wont work with arrow function.
+
+this has many other functionalities in JS...
+-----------------------------------------
+
+constructors in JS
+------------------
+
+In JavaScript, constructors are special functions that you use to create and initialize new objects.
+
+Constructors are called using the new keyword to allocate memory for a new object and invoke the constructor function. This new object inherits properties and methods from the constructor's prototype.
+
+The constructor's code is responsible for initializing the properties of the newly created object. This usually involves assigning values to properties or performing any necessary setup logic.
+
+function Car(make, model, year, color){
+    this.make = make,
+    this.model = model,
+    this.year = year,
+    this.color = color,
+    this.drive = function(){console.log(`You drive the ${this.model}`)}
+}
+
+const car1 = new Car("Dodge", "Charger", 2001, "red");
+const car2 = new Car("Lamborgini", "Charger", 2011, "blue");
+
+
+console.log(car1.color);
+console.log(car2.make);
+
+car1.drive();
+
+------------------------------------------
+
+class in JS
+-----------
+
+In JavaScript, classes, introduced in ECMAScript 2015 (ES6), offer a syntactic sugar for creating objects in a more structured and concise way compared to traditional object constructors. They provide a blueprint or template for creating objects with shared properties and methods.
+
+Classes are not fundamentally different from object constructors, they simply offer a more standardized and organized approach to achieve the same goal of object creation and initialization.
+
+Instead of creating a constructor method we can create a class. Our class can include a constructor.
+
+class Product{
+    constructor(name, price){
+        this.name = name;
+        this.price = price;
+    }
+
+    displayProduct(){
+        console.log(`Product: ${this.name}`);
+        console.log(`Price: $${this.price}`);
+    }
+
+    calculateTotal(salesTax){
+        return this.price + (this.price * salesTax);
+    }
+}
+
+const salesTax = 0.05;
+
+//In class to create object, we have to use new keyword.
+const product1 = new Product("Shirt", 19.99);
+const product2 = new Product("Pants", 24.99);
+const product3 = new Product("Underwear", 100.00);
+
+product2.displayProduct();
+
+const total = product3.calculateTotal(salesTax);
+console.log(`Total price (with tax): $${total.toFixed(2)}`)
+
+Also we dont not use function keyword for creating a function inside a class.
+
+-------------------------------------------------
+static keyword in JS
+--------------------
+
+Static methods and properties belong directly to the class itself, rather than specific instances (objects) created from the class.
+
+You call static methods or variable using the class name directly, without having to create an object of the class.
+
+Typically, static methods don't rely on the properties of specific objects.
+
+
+class User{
+    static userCount = 0;
+
+    constructor(username){
+        this.username = username;
+        User.userCount++;
+    }
+
+    static getUserCount(){
+        console.log(`There are ${User.userCount} users online`);
+    }
+
+    sayHello(){
+        console.log(`Hello, my username is ${this.username}`);
+    }
+}
+
+const user1 = new User("Sujith");
+const user2 = new User("Sujith");
+
+user1.sayHello();
+User.getUserCount();
+
+------------------------------------------------
+inheritance 
+-----------
+
+Allows a new class to inherit properties and methods from an existing class (parent -> child)
+
+
+class Animal{
+    alive = true;
+
+    eat(){
+        console.log(`This ${this.name} is eating`);
+    }
+
+    sleep(){
+        console.log(`This ${this.name} is sleeping`);
+    }
+}
+
+class Rabbit extends Animal{
+    name = "rabbit";
+
+    run(){
+        console.log(`This ${this.name} is running`);
+    }
+}
+
+class Fish extends Animal{
+    name = "fish";
+
+    swim(){
+        console.log(`This ${this.name} is swimming`);
+    }
+}
+
+class Hawk extends Animal{
+    name = "hawk";
+
+    fly(){
+        console.log(`This ${this.name} can fly`);
+    }
+}
+
+const rabbit = new Rabbit();
+const fish = new Fish();
+const hawk = new Hawk();
+
+rabbit.alive = false;
+
+console.log(rabbit.alive);
+rabbit.eat();
+rabbit.sleep();
+rabbit.run();
+
+child classes can also make their own methods like run, fly and swim method.
+--------------------------------------------------
+
+super
+-----
+
+super is used in classes to call the constructor or access the properties and methods of a parent.
+
+this = this object.
+super= the parent.
+
+class Animal{
+
+    constructor(name, age){
+        this.name = name;
+        this.age = age;
+
+    }
+
+    move(speed){
+        console.log(`The ${this.name} moves at a speed of ${speed}kmph`) 
+     }
+
+}
+
+
+class Rabbit extends Animal{
+
+    constructor(name, age, runSpeed){
+        super(name, age);
+        this.runSpeed = runSpeed;
+
+    }
+
+    run(){
+        console.log(`This ${this.name} can run`); 
+        super.move(this.runSpeed);
+     }
+
+    
+
+}
+
+class Fish extends Animal{
+
+    constructor(name, age, swimSpeed){
+        super(name, age);
+        this.swimSpeed = swimSpeed;
+    }
+
+    swim(){
+        console.log(`This ${this.name} can swim`);
+        super.move(this.swimSpeed); 
+     }
+
+}
+
+class Hawk extends Animal{
+
+    constructor(name, age, flySpeed){
+        super(name, age);
+        this.flySpeed = flySpeed;
+
+    }
+
+    fly(){
+        console.log(`This ${this.name} can fly`);
+        super.move(this.flySpeed); 
+     }
+
+}
+
+
+const rabbit = new Rabbit("rabbit", 1, 25);
+
+const fish = new Fish("rabbit", 2, 12);
+
+const hawk = new Hawk("hawk", 3, 50);
+
+rabbit.run();
+-----
+Here we can access the parent constructor like:
+constructor(name, age, runSpeed){
+        super(name, age);
+        this.runSpeed = runSpeed;
+}
+The above constructor is the child class constructor.
+-----
+We can also access the parent class method like:
+run(){
+     console.log(`This ${this.name} can run`); 
+     super.move(this.runSpeed);
+   }
+
+Here from the child class method run() we are calling the parent class method move.
+----------------------------------
+getters & setters
+-----------------
+
+In JavaScript classes, getters and setters are special methods that offer enhanced control over how properties are accessed and modified within an object.
+
+Getter:
+A getter is like a function that gets the value of a property.
+It is defined using the get keyword.
+When you access the property, the getter method is automatically called.
+
+Setter:
+A setter is like a function that sets the value of a property.
+It is defined using the set keyword.
+When you assign a value to the property, the setter method is automatically called.
+
+Eg:-
+
+class Person {
+  constructor(name) {
+    this._name = name; // Use a private property name convention
+  }
+
+  get name() {
+    return this._name;
+  }
+  
+  get addreess(){
+  console.log("This is my address");
+  }
+
+  set name(newName) {
+    if (newName.length < 2) {
+      throw new Error("Name must be at least 2 characters long");
+    }
+    this._name = newName;
+  }
+}
+
+const person1 = new Person("Alice");
+console.log(person1.name); // Output: "Alice"
+
+console.log(person1.address());
+
+With getter we can create access a property that doesnt even exist. In the above code, address is an example.
+
+or 
+
+
+class Person{
+
+    constructor(firstName, lastName, age){
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+    }
+
+    set firstName(newFirstName){
+        if(typeof newFirstName === "string" && newFirstName.length > 0){
+            this._firstName = newFirstName;
+        }else{
+            console.error("First name must be a non empty string");
+        }
+    }
+    
+    set lastName(newLastName){
+   
+    }
+    
+    set age(newAge){
+   
+    }
+
+    get firstName(){
+        return this._firstName;
+    }
+    
+    get lastName(){
+        return this._lastName;
+    }
+    
+    get age(){
+        return this._age;
+    }
+
+
+}
+
+
+const person = new Person("Sujith", 69, "pizza");
+
+console.log(person.firstName);
+console.log(person.lastName);
+console.log(person.age);
+
+-----------------------------------
+destructuring
+-------------
+
+extract values from array and object, then assign them to variables in a convenient way.
+[] = to perform array destructuring.
+{} = to perform object destructuring.
+
+1. Swap the value of two variable.
+
+let a = 1;
+let b = 2;
+
+[a, b] = [b, a];
+
+console.log(a);
+console.log(b);
+
+2. Swap two elements in an array
+
+const colors = ["red", "green", "blue", "black", "white"];
+
+[colors[0], colors[4]] = [colors[4], colors[0]];
+
+console.log(colors);
+
+3. Assign array elements to variables.
+
+const colors = ["red", "green", "blue", "black", "white"];
+
+
+const [firstColor, secondColor, thirdColor] = colors;
+
+console.log(firstColor);
+console.log(secondColor);
+console.log(thirdColor);
+
+4. Destructuring objects
+
+const person1 = {
+    firstName: "Suith",
+    lastName: "V S",
+    age: 22,
+    job: "Fry Cook"
+}
+
+const person2 = {
+    firstName: "Suith",
+    lastName: "V S",
+    age: 27,
+}
+
+const {firstName, lastName, age, job="Unemployed"} = person2;
+
+
+console.log(lastName);
+
+We can set default value like job property in the above eg.
+
+
+5. Destructuring in function parameters
+
+function displayPerson({firstName, lastName, age, job="Unemployed"}){
+    console.log(`name: ${firstName} ${lastName}`);
+    console.log(`age: ${age}`);
+    console.log(`job: ${job}`);
+}
+
+
+const person1 = {
+    firstName: "Suith",
+    lastName: "V S",
+    age: 22,
+    job: "Fry Cook"
+}
+
+const person2 = {
+    firstName: "Suith",
+    lastName: "V S",
+    age: 27,
+}
+
+displayPerson(person2);
+
+If any values is not available, then we can set the default value like job="Unemployed" in the above function parameter.
+
+----------------------------------------------
+Nested Objects
+--------------
+Object inside another object.
+Allow you to represent more complex data structures.
+Child object is enclosed by parent object.
+
+const person = {
+    fullName: "Sujith V S",
+    age: 30,
+    isStudent: true,
+    hobbies : ["Karate", "Jellyfishing", "Cooking"],
+    address: {
+        street: "124 Cochin",
+        city: "Mannarkkad",
+        country: "India"
+    }
+}
+
+console.log(person.address.country);
+
+
+To loop through the nested object use:
+for(const property in person.address){
+    console.log(person.address[property]);
+}
+
+--------------------------------------------------
+Array of objects
+----------------
+
+objects inside array.
+
+const fruits = [
+    {name: "apple", color:"red", calories: 95},
+    {name: "orange", color:"orange", calories: 45},
+    {name: "banana", color:"yellow", calories: 105},
+    {name: "coconut", color:"white", calories: 159},
+    {name: "pineapple", color:"yellow", calories: 37},
+]
+
+console.log(fruits[0].name);
+
+We can do all kind of operations with the array of objects.
+
+----------------------------------------------------
+Sorting
+-------
+
+sort() - method used to sort elements of an array in place.
+         sorts elements as string in lexicographic order, not alphabetical
+
+-----
+sorting string - 
+
+let fruits = ["apple", "orange", "banana", "coconut", "pineapple"];
+fruits.sort();
+console.log(fruits);    
+
+The above code will sort the array in alphabetic order.
+-----
+sorting numbers - 
+
+let numbers = [1, 10, 2, 9, 5, 7, 9, 1, 8];
+numbers.sort((a, b) => a - b);
+console.log(numbers);
+
+You can provide a comparison function as an argument to sort() to define custom sorting criteria. This function takes two elements from the array and returns a value based on the desired comparison:
+
+Return -1 if the first element should come before the second.
+Return 1 if the first element should come after the second.
+Return 0 if the elements are considered equal.
+-----
+sorting objects inside array - 
+
+const people = [
+    {name: "Spongebob", age: 30, gpa: 3.0},
+    {name: "Spongebob", age: 37, gpa: 1.5},
+    {name: "Spongebob", age: 51, gpa: 2.5},
+    {name: "Spongebob", age: 27, gpa: 4.0},
+]
+
+people.sort((a, b) => a.age - b.age);
+
+console.log(people);
+-----------------------------------------------
+
+Date object in JS
+-----------------
+
+const date = new Date();
+
+console.log(date);
+
+This will output the current date and time.
+Parameter orderof date object:- //Date(year, month, day, hour, minute, second, ms)
+
+-------------------------------------------------
+
+Closure - 
+-------
+
+A function defined inside of another function, the inner function has access to the variables and scope of the outer function.
+Allow for private variables and state maintenance.
+Used freequently in JS frameworks: React, Vue, Angular.
+
+
+function outer(){
+
+    let message = "Hello";
+
+    function inner(){
+        console.log(message);
+    }
+
+    inner();
+}
+
+outer();
+
+clausers will encapsulete the variable and make them private becuse we will not be able to access the message variable from outside the outer scope.
+----
+> A closure can maintain the state of a variable.
+(state of a variable - State of a variable refers to the current value it holds at a specific point in your program's execution.)
+
+> Program to increase the count by 1.
+
+function increment(){
+    let count = 0;
+    count++;
+    console.log(`Count increased to ${count}`);
+}
+
+increment();
+increment();
+increment();
+increment();
+increment();
+
+In the above code the count wont increase more than one because everytime we call the increment function the value of count is resetting to 0.
+
+- So we can do it as,
+
+function createCoutner(){
+let count = 0;
+
+function increment(){
+    count++;
+    console.log(`Count increased to ${count}`);
+}
+
+//getCount functionis to get the count of the count variable.
+function getCount(){
+    return count;
+}
+
+return {increment: increment, getCount:getCount};
+}
+
+const counter = createCoutner();
+
+counter.increment();
+counter.increment();
+counter.increment();
+counter.increment();
+counter.increment();
+
+
+console.log(`The current count is ${counter.getCount()}`);
+
+In the above code, we are returning the increment function in an object to maintain the state of the outer function variable count.
+----------------------------------------------
+
+setTimeout
+----------
+
+function in JS that allows you to schedule the execution of a functon after a amount of time.(milliseconds)
+
+setTimeout(callback, delay);
+
+eg:
+function sayHello(){
+    window.alert("Hello");
+}
+
+setTimeout(sayHello, 3000);
+
+---
+
+setTimeout(function(){
+    window.alert("Hello");
+}, 3000);
+
+----------
+
+clearTimeout(timeoutId) = can cancel a timeout before it trriggers.
+
+const timeoutId = setTimeout(function(){
+    window.alert("Hello");
+}, 3000);
+
+clearTimeout(timeoutId);
+------------------------------------------------------
+
+ES6 Module
+----------
+
+an external file that contain reusable code that can be imported into other JS files.
+Modules can contain variables, classes, function and more...
+
+to import a file to index.js file. We have to add type="module" in our html script tag.
+<script type="module" src="index.js"></script>
+
+
+> mathUtil.js
+
+export function getCircumference(){
+
+}
+
+export function getArea(radius){
+
+}
+
+> index.js
+
+import {PI, getCircumference, getArea} from './mathUtil.js';
+
+-----------------------------------------------
+
+Synchronous - Executes line by line consecutively in a sequential manner. Code that waits for an operation to complete.
+
+Asynchronous = Allows multiple operations to be performed concurrently without waiting. Doesn't block the execution flow and allows the program to continue.
+
+Asynchronous code can be found in I/O operation, network requests, fetching data
+
+Handles with: callbacks, promises, async/await.
+
+Handling async
+
+------------------------------------------------
+
+Error = An object that is created to represent a problem that occur. Occurs often with user input or establish a coxnnection.
+
+Errors can occur as network errors, promise rejection, security errors.
+
+SO to while this error occurs, we have to handle that error. So to handle it, we can use try, catch, finally.
+
+try{} - encloses code that might potentially cause an error.
+catch{} - catch and handle any thrown error from try.
+finally{} - (optional)  always executes. Used mostly for clean up. eg: close file, close connections, related resources.
+
+
+try{
+    console.log(x);
+}catch(error){
+    console.error(error);
+}finally{
+    //finally bock always executes, regardless of the error comes up.
+
+    /*
+    finally block is used for,
+    CLOSING FILE
+    CLOSE CONNECTIONS
+    RELEASE RESOURCES
+    */
+
+}
+
+> IN CASE OF USER INPUT, an eg is we can use to check if user divides a number with 0.
+
+throw
+-----
+if(divisor == 0){
+    throw new Error("You cant divide by zero");
+}
+
+In JavaScript error handling, the throw statement allows you to explicitly create and raise an error during your program's execution. We write throw inside try.
+-------------------------------------------------lt to read.
+Callback Hell
+-------------
+
+Situation in JS where callbacks are nesteed within other callbacks to the degree where the code is difficult to read. Old pattern to handle asynchronous functions. Now we can use Promises + async/await to avoid callback hell.
+
+function task1(){// Online Javascript Editor for free// Online Javascript Editor for free
+// Write, Edit and Run your Javascript code using JS Online Compiler
+// Write, Edit and Run your Javascript code using JS Online Compiler
+    setTimeout(() => {
+        console.log("Task 1 complete");
+
+    }, 2000);
+    
+}
+
+function task2(){
+    setTimeout(() => {
+        console.log("Task 2 complete");
+
+    }, 1000);
+}
+
+function task3(){
+    setTimeout(() => {
+        console.log("Task 3 complete");
+
+    }, 3000);
+}
+
+function task4(){
+    setTimeout(() => {
+        console.log("Task 4 complete");
+
+    }, 1500);
+}
+
+task1();
+task2();
+task3();
+task4();
+console.log("All task complete");
+
+The pproblem with asynchronous code is asynchronous function can complete at any time and rest of our program doesnt wait for them to finish. If we want that function to complete in order, we can use the callback.
+
+The below code produces the callback hell:
+
+function task1(callback){
+    setTimeout(() => {
+        console.log("Task 1 complete");
+        callback();
+    }, 2000);
+    
+}
+
+function task2(callback){
+    setTimeout(() => {
+        console.log("Task 2 complete");
+        callback();
+
+    }, 1000);
+}
+
+function task3(callback){
+    setTimeout(() => {
+        console.log("Task 3 complete");
+        callback();
+    }, 3000);
+}
+
+function task4(callback){
+    setTimeout(() => {
+        console.log("Task 4 complete");
+        callback();
+    }, 1500);
+}
+
+task1(() => {
+    task2(() => {
+        task3(() => {
+            task4(() => {
+                console.log("All tasks complete");
+            })
+        })
+    })
+})
+
+The abov ecode is callback hella and it is very unmanageable.
+
+Even though asynchronous code allows your program to perform multiple tasks concurrently, there are often situations where specific actions need to happen in a particular order.
+Synchronous code execution within asynchronous behavior ensures that these dependent tasks are completed sequentially.
+For example, imagine fetching data from an API and then using that data to update the UI. You wouldn't want to update the UI before the data is actually retrieved, which requires synchronous execution after the asynchronous fetch.
+-------------------------------------------------------
+Promise
+-------
+
+Promise is an object that manages asynchronous operaations such as quering a database, fetching a file etc...
+We can wrap a promise object around asynchronous code.The promise object promises ti=o return a value.That promise object will be pending, or it can be resolved if the task complete successfully or rejected if it failed.
+
+syntax:
+new Promise((resolve, reject) => {asynchronous code})
+
+-----
+This is how we work with asynchronous code using callback 
+
+function walkDog(callback){
+
+    setTimeout(() => {
+        console.log("You walk the dog");
+        callback();
+    }, 1500);
+    
+}
+
+
+function cleanKitchen(callback){
+
+    setTimeout(() => {
+        console.log("You clean the kitchen");
+        callback();
+    }, 2500);
+    
+}
+
+
+function takeOutTrash(callback){
+
+    setTimeout(() => {
+        console.log("You take out the trash");
+        callback()
+    }, 500);
+    
+}
+
+walkDog(() => {
+    cleanKitchen(() => {
+        takeOutTrash(() => {
+            console.log("You finished all the chores!")
+        })
+    })
+})
+-----
+The same task using promise.
+
+
+function walkDog(){
+
+    
+    //promise will return a value, it either going to be resolve or reject.
+
+    return new Promise((resolve, reject) => {
+
+        setTimeout(() => {
+
+            const dogWalked = false;
+
+            if(dogWalked){
+            resolve("You walk the dog");
+            }else{
+                reject("You didnt walk the dog");
+            }
+        }, 1500);
+        
+    })
+    
+}
+
+
+function cleanKitchen(){
+
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+
+            let kitchenClean = true;
+
+            if(kitchenClean){
+                resolve("You clean the kitchen");
+
+            }else{
+                reject("You didnt clean the kitchen");
+
+            }
+        }, 2500);
+    })
+    
+}
+
+
+function takeOutTrash(){
+
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const trashTakenOut = false;
+
+            if(trashTakenOut){
+            resolve("You take out the trash");
+            }else{
+                reject("You didnt take out the trash");
+            }
+        }, 500);
+
+    })
+    
+}
+
+
+//Here the walkDog returns a value and we use that value to console.log.
+walkDog().then(value => {console.log(value); return cleanKitchen()})
+         .then(value => {console.log(value); return takeOutTrash()})
+         .then(value=> {console.log(value); console.log("You finished all your task.")})
+         .catch(error => console.error(error));
+
+//If any othe promise rejects, then no other promise works and it will stop working.      
+-------------------------------------------
+
+Async / Await
+-------------
+
+Async = makes a function return a promise.
+Await = makes an async function wait for a promise.
+
+It allows you to write asynchronous code in a synchronous manner.
+Async doesnt have resolve or reject parameters.
+Everything after await is placed in an event queue.
+
+function walkDog(){
+
+    
+    //promise will return a value, it either going to be resolve or reject.
+
+    return new Promise((resolve, reject) => {
+
+        setTimeout(() => {
+
+            const dogWalked = true;
+
+            if(dogWalked){
+            resolve("You walk the dog");
+            }else{
+                reject("You didnt walk the dog");
+            }
+        }, 1500);
+        
+    })
+    
+}
+
+
+function cleanKitchen(){
+
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+
+            let kitchenClean = true;
+
+            if(kitchenClean){
+                resolve("You clean the kitchen");
+
+            }else{
+                reject("You didnt clean the kitchen");
+
+            }
+        }, 2500);
+    })
+    
+}
+
+
+function takeOutTrash(){
+
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            const trashTakenOut = false;
+
+            if(trashTakenOut){
+            resolve("You take out the trash");
+            }else{
+                reject("You didnt take out the trash");
+            }
+        }, 500);
+
+    })
+    
+}
+
+
+async function doChores(){
+
+    try{
+
+        const walkDogResult = await walkDog();
+        console.log(walkDogResult);
+
+        const cleanKitchenResult = await cleanKitchen();
+        console.log(cleanKitchenResult);
+
+        const takeOutTrashResult = await takeOutTrash();
+        console.log(takeOutTrashResult);
+
+        console.log("You finished all the chores!");
+
+    }catch(error){
+        console.error(error);
+
+    }
+}
+
+doChores();
+
+----------------------------------------------
+fetch
+-----
+
+it is the function used for making HTTP requests to fetch resources.
+
+It returns JSON style data, images, files.
+
+simplifies asynchronous data fetching in JS.
+
+Used for interacting with API to retrive and send data asynchronously over the web.
+
+Syntax:
+
+fetch(url, {options})
+
+
+Eg:
+
+
+fetch("")
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error(error));
+
+//The .json() method in JavaScript is used to parse a JSON string and convert it into a native JavaScript object.
+//The data in the above code is the json data.
+
+--------------------------------------------------
+JSON
+----
+
+Javascript object notation
+Used for exchanging data between a sever ND WEb application.
+JSON file {key:value} OR [value1, value2, value3]
+
+JSON.stringify() = convert a JS object to a JSON string.
+JSON.parse() = convert a JSON string to a JS object.
+
+------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

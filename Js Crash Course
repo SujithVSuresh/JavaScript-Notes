@@ -1,0 +1,517 @@
+                              Javascript crash Notes.
+                              ------------------------
+Datatypes:
+Number type, String type, Boolean type
+
+innerText = Take all the test inside an element.
+innerHTML = Takes all the text and child element.
+
+Onclick in button.
+<button id="increment-btn" onclick="increment()">Increment</button>
+
+*Why === instead of == ?
+eg 100 == "100" - double equal ignores the fact that one is number and other is string and return the value to True. === strictly checks it, if both the values are of diff data types, then === wont return it to true.
+
+*querySelector - with this we can select element by its id or class or by the element name.
+ed: document.querySelector("#id")
+-------------------------------------------------------------------------------
+*Array
+featuredPost.length - length property will return length of an array.
+cards.push(6) - push method pushes a value to the array.
+-------------------------------------------------------------------------------
+*Loop
+
+------------------------------------------------------------------------------
+JS Random number:
+ let randomNumber =  Math.floor(Math.random()*13) + 1
+-----------------------------------------------------------------------------
+&& || 
+-----------------------------------------------------------------------------
+objects - 
+to acces a value in an array = arrayName.keyName
+-----------------------------------------------------------------------------
+*Event Listner.
+inputBtn.addEventListner("click", function(){
+  console.log(".......")
+})
+-----------------------------------------------------------------------------
+const - cannot be reassigned
+if we want to reassign use let, else use const.
+-------------------------------------------------------------------------------
+ ulEl.innerHTML += "<li>" + myLeads[i] + "</li>"
+-------------------------------------------------------------------------------
+Another way of creating element.
+    const li = document.createElement("li")
+    li.textContent = myLeads[i]
+    ulEl.append(li)
+-------------------------------------------------------------------------------
+<a href='" + myLeads[i] + "'>" + myLeads[i] + "</a>
+ This is how to put a link inside a in innerhtml purpose.
+--------------------------------------------------------------------------------
+Template strings-
+eg: myName = `{$variable}`
+---------------------------------------------------------------------------------
+LOCAL STORAGE : -
+//localStorage.setItem("names", "MY LOVE")
+//console.log(localStorage.getItem("names"))
+//localStorage.clear()
+-------------------------------------------------------------------------------
+To convert it to string and to convert it to js object.
+myLeads = JSON.parse(myLeads)
+myLeads.push("ajith")
+console.log(myLeads)
+myLeads = JSON.stringify(myLeads)
+console.log(typeof myLeads)
+------------------------------------------------------------------------------
+Falsy value JS: - 
+
+false
+0
+""
+null = how we as a developer signalizes emptiness
+undefined = how js signalizes emptiness
+NaN
+
+In JavaScript, undefined is a type, whereas null an object. In undefined a  variable declared, but no value has been assigned. Whereas, null in JavaScript is an assignment value. You can assign it to a variable.
+------------------------------------------------------------------------------
+
+                                      JS ES6
+
+Arrow Function:
+
+  const mGreetings = (name, age) => {
+    return `Welcome ${name} ${age}`
+  }
+console.log(mGreetings('Amal', 34));
+
+Function with one argument we can exclude paranthesis:
+
+ const mGreetings = name => {
+    return `Welcome ${name}`
+}
+
+Function which has one statement we can exclude curly braces and return statement, because it automatically returns that statement:
+  
+   const mGreetings = name => `Welcome ${name}`
+------------------------------------------------------------------------------
+
+Rest Operator:
+
+Rest is used in function to pass more than one arguments using a single parameter.(...args)
+  
+  const mSum = (...args) => {
+    let sum = 0;
+    for(let i=0; i<args.length; i++){
+        sum += args[i]
+    }
+    console.log(sum)
+  }
+
+  mSum(1,2,3,4,5)
+---------------------------------
+Spread Operator:
+
+Spread operator can be used to copy an array to another array.
+let mArr1 = [1,2,3,4,5,6];
+let mArr2 = [...mArr1];
+mArr1.push(7)
+
+console.log(mArr1)
+console.log(mArr2)
+
+We can concatunate two arrays.
+let mArr1 = [1,2,3,4,5,6];
+let mArr2 = [...mArr1];
+
+let mArr3 = [...mArr1, ...mArr2]
+
+Spread operator in objects:
+
+let mObj1 = {
+    name:'John',
+}
+let mObj2 = {
+    age:28,
+}
+let mObj3 = {...mObj1, ...mObj2}
+console.log(mObj3)
+--------------------------------------------------------------------------------
+DESTRUCTURING:
+It allows us to unpack array or object into bunch of variables.
+
+ARRAY DESTRUCTURING:
+
+const name = "Manu titus Duck";
+const nameArr = name.split(' ') 
+
+//let firstName = nameArr[0];
+//let middleName = nameArr[1];
+
+let [firstName, , lastName] = nameArr;
+
+console.log(firstName)
+//console.log(middleName)
+console.log(lastName)
+
+OBJECT DESTRUCTURING:
+
+const person = {
+    firstName:"Sujith",
+    lastName:"Suresh",
+    age: 20,
+}
+let {firstName, lastName} = person
+
+console.log(firstName)
+console.log(lastName)
+----------------------------------------------------------------------------
+Map method in Array:
+
+let newArr = mArr.map((item) => {
+     return item*2;
+})
+console.log(newArr)
+
+O/P : [ 2, 4, 6, 8, 10 ]
+
+map in obj inside Array:
+const mArr = [
+    {
+    firstname:'Sujith',
+    lastname:'V S',
+    age:20
+    },
+    {
+    firstname:'Sujith',
+    lastname:'V S',
+    age:20
+    },
+    {
+    firstname:'Sujith',
+    lastname:'V S',
+    age:20
+    }
+];
+
+let newArr = mArr.map((data) => {
+    return {
+        firstname: data.firstname,
+        lastname: data.lastname
+    }
+})
+
+console.log(newArr)
+
+- a new array is created in the variable newArr with the help of return value.
+
+----------------------------------------------------------------------------
+reduce method in array:
+
+a program to find the total exp:
+
+const myArr = [
+    {
+        name:'Sujith',
+        exp:2
+    },
+    {
+        name:'Joel',
+        exp:2
+    },
+    {
+        name:'Niv',
+        exp:2
+    },
+]
+
+let result = myArr.reduce((acc, item) => {
+    let total = item['exp']
+    return acc + total;
+}, 0)
+
+console.log(result)
+
+O/P = 6
+
+- In reduce method the return value is stored in acc.
+- reduce method takes two arguments, 1st is the callback function, 2nd is the default accumulator value.
+- after iteration the total result will be send to the variable result.
+------------------------------------------------------------------------------
+filter method in array:
+
+A program to filter out even number from an array and creates a new array with odd numbers.
+
+const numArr = [1,2,3,4,5];
+
+const resultArr = numArr.filter(item => {
+    //console.log(item)
+    return item % 2 !== 0;
+    
+})
+console.log(resultArr)
+
+O/P = [ 1, 3, 5 ]
+
+- element is added to the new array based on the return condition.(teur or false)
+
+*A program to filter and create a new array based on the age less than or equal to 20:
+
+const objArr = [
+    {
+        name:'sujith',
+        age:20
+    },
+        {
+        name:'amal',
+        age:17
+    },
+        {
+        name:'akhil',
+        age:23
+    },
+        {
+        name:'ajith',
+        age:25
+    },
+        {
+        name:'ajin',
+        age:16
+    },
+        {
+        name:'nivedh',
+        age:19
+    },
+] 
+
+const resultArr = objArr.filter(item => {
+    //console.log(item)
+    return item['age'] <= 20;
+    
+})
+console.log(resultArr)
+
+O/P:
+[ { name: 'sujith', age: 20 },
+  { name: 'amal', age: 17 },
+  { name: 'ajin', age: 16 },
+  { name: 'nivedh', age: 19 } ]
+----------------------------------------------------------------------------
+find() and findIndex() array method:
+
+- find() it search and return the first element that matches the conditon.
+-findIndex() it is similar to find() but the diff is that it returns index of that element instead of that element itsself.
+
+to return the first positive even number in an array:
+const numArr = [-1,-2,-3,-4,1,2,3,4]
+
+const result = numArr.find(item => {
+    return item % 2 === 0 && item >= 0;
+})
+
+console.log(result)
+
+O/P: 2
+----------------------------------------------------------------------------
+Class in ES6:
+
+class Car {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+  
+    r(){
+      return `Name: ${this.name} and Age: ${this.age}`
+   }
+}  
+
+let myDetails = new Car('Sujith', 2001);
+console.log(myDetails.r());
+----------------------------------------------------------------------------
+Inheritance ES6:
+
+class Person {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+  
+    myDetails(){
+      return `Name: ${this.name} and Age: ${this.age}`
+   }
+}  
+
+class Pilot extends Person{
+    constructor(name, age, exp, type, license){
+        super(name, age);
+        this.experience = exp;
+        this.type = type;
+        this.license = license;
+    }
+    
+    getData(){
+        console.log(`Name: ${this.myDetails()} and Experience: ${this.experience} and Type: ${this.type}`)
+    }
+}
+
+const john = new Pilot('Sujith', 2001, 28, 'private', 'TCE123')
+john.getData()
+
+const tojo = new Pilot('Todo', 1988, 31, 'commercial', 'TC4664')
+tojo.getData()
+---------------------------------------------------------------------------------
+                          
+                        ASYNCHRONOUS JAVASCRIPT
+                        ------------------------
+An eg on aynchronous programming:
+
+
+console.log(" I ");
+
+console.log(" Eat ");
+
+setTimeout(() => {
+  console.log(" Ice Cream ");
+}, 3000);
+
+console.log("  With a ");
+
+console.log(" Spoon ");
+----------------------------------------------
+
+Promises:
+
+let stocks = {
+  Fruit: ["strawberry", "grapes", "banana", "apple"],
+  liquid: ["water", "ice"],
+  holder: ["cone", "cup", "stick"],
+  toppings: ["chocolate", "peanuts"]
+};
+
+let isShopOpen = true;
+
+let order = (time, work) => {
+  return new Promise((resolve, reject) => {
+    if (isShopOpen) {
+      setTimeout(() => {
+        resolve(work());
+      }, time);
+    } else {
+      reject(console.log("our shop is closed"));
+    }
+  });
+};
+
+order(2000, () => console.log(`${stocks.Fruit[0]} was selected`))
+  .then(()=>{
+    return order(0000, ()=>console.log('Production has started'))
+  })
+  .then(()=>{
+  return order(2000, ()=>console.log("The fruit was chopped."))
+})
+  .then(()=>{
+  return order(1000, ()=>{
+    console.log(`${stocks.liquid[0]} and ${stocks.liquid[1]} was selected`)
+  })
+})
+  .then(()=>{
+  return order(1000, ()=>console.log('start the machinbe'))
+})
+  .then(()=>{
+  return order(2000, ()=>{
+    console.log(`Ice cream places on ${stocks.holder[0]}`)
+  })
+})
+  .then(()=>{
+  return order(3000, ()=>{
+    console.log(`${stocks.toppings[0]} was selected`)
+  })
+})
+  .then(()=>{
+  return order(1000, ()=>console.log("ice cream was served"))
+})
+
+.catch(()=>{
+  console.log("customer left")
+})
+
+.finally(()=>{
+  console.log('day ended, shop is closed.')
+})
+----------------------------------------------
+async await:
+
+let stocks = {
+  Fruit: ["strawberry", "grapes", "banana", "apple"],
+  liquid: ["water", "ice"],
+  holder: ["cone", "cup", "stick"],
+  toppings: ["chocolate", "peanuts"]
+};
+
+let isShopOpen = false;
+
+function time(ms){
+  return new Promise( (resolve, reject)=>{
+    if(isShopOpen){
+      setTimeout(resolve, ms)
+    }
+    else{
+      reject(console.log("shop is closed"))
+    }
+  });
+}
+
+async function kitchen(){
+  try{
+    await time(2000)
+    console.log(`${stocks.Fruit[0]} was selected`)
+    
+    await time(0000)
+    console.log("start the production")
+    
+    await time(2000)
+    console.log("cut the fruit")
+    
+    await time(1000)
+    console.log('start the machine')
+    
+    await time(2000)
+    console.log(`ice cream placed at ${stocks.holder[0]}`)
+    
+    await time(3000)
+    console.log(`${stocks.toppings[0]} was selected`)
+    
+    await time(2000)
+    console.log('serve ice cream')
+    
+    
+  }catch(error){
+    console.log("customer left", error)
+  }finally{
+    console.log("day ended, shop is closed")
+  }
+}
+
+kitchen();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

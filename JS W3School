@@ -1,0 +1,491 @@
+JavaScript
+----------
+
+Viewport - The "viewport" usually refers to the visible area of a web page within the browser window. It is the portion of the web page that is currently visible to the user. The size of the viewport can be affected by factors like the device screen size, browser window dimensions, and zoom level.
+
+document - The document in web development typically refers to the entire HTML document object model (DOM) of a web page.
+It represents the structured content of a web page, including all HTML elements, their attributes, and the relationships between them.
+
+> Script tag can be placed both in body or in head tag.
+
+> document.write() - is used to write content in document.
+> console.log() - is used to write content in console. 
+
+> js comments - 
+  single line  - //
+  multi line - /* */
+  
+> js variables - 
+  variables in js can be declared in 4 ways.
+  - Automatically
+    undeclared variavles are automatically declared when first used.
+    x = 5;
+    y = 6;
+    z = x + y;
+    
+  - using var
+    The var keyword was used in all JavaScript code from 1995 to 2015.
+    The let and const keywords were added to JavaScript in 2015.
+    The var keyword should only be used in code written for older browsers.
+    
+  - using let
+  - using const
+  
+> js let -
+  
+  block scope - is introduced after the introduction of let and const.
+  varible declared indide {} block cannot be accessed from outside the block.
+  variable declared with let cannot be redeclareed in the same scope.
+  
+  global scope - variable declared with var always have global scope.
+  var do not have block scope. 
+  var has function scope.
+  
+> js const -
+  Variables defined with const cannot be Redeclared.
+  Variables defined with const cannot be Reassigned
+  Variables defined with const have Block Scope.
+  Always assign value along with declaration in const.
+  Always declare a variable with const when you know that the value should not be changed. like in  array, object and function.
+  We can chaange the properties of constant array or object, but we cannot reassign to the array or object.
+  
+> Datatypes in Javascript.
+ String, NUmber, Bigint, Boolean, Undefined, Null, Symbol, Object.  
+ 
+ -If we concatinate string and number together, then the number will be vonverted to string form.
+ 
+ -typeof operator - we can use typeof operator to find the type of the js variable.
+ 
+ -In JavaScript, a variable without a value, has the value undefined. The type is also undefined.
+ 
+ - undefined - In JavaScript, a variable without a value, has the value undefined. The type is also undefined.
+
+> Functions in JS
+
+  function myFunction(p1, p2) {
+      return p1 * p2;
+  }
+  
+ - local variable - Variables declared within a JavaScript function, become LOCAL to the function.
+                    Local variables can only be accessed from within the function.
+
+> Objects in js
+
+  const car = {type:"Fiat", model:"500", color:"white"};
+  The values are written as name:value pairs (name and value separated by a colon).
+  const person = {
+  firstName: "John",
+  lastName: "Doe",
+  age: 50,
+  eyeColor: "blue"
+  };
+  It is not necessary to put key or name inside the " ".
+  
+  - Accessing object properties.
+    objectName.propertyName
+    or
+    objectName["propertyName"]
+    
+  - Object can also have methods.
+    function myPlace(){
+    console.log("Hlo Wrl");
+    }
+
+    const student = {name:"Sujith", age: 25, place:"Kerala", message:myPlace};
+    
+    Accessing object method - objectName.methodName()
+    
+  - this keyword.
+    In JavaScript, the this keyword refers to an object.
+
+    const person = {
+    firstName: "John",
+    lastName : "Doe",
+    id       : 5566,
+    fullName : function() {
+    return this.firstName + " " + this.lastName;
+    }
+    };
+
+> JS Events.
+  HTML events are "things" that happen to HTML elements.
+  When JavaScript is used in HTML pages, JavaScript can "react" on these events.
+  
+  onchange	An HTML element has been changed
+  onclick	The user clicks an HTML element
+  onmouseover	The user moves the mouse over an HTML element
+  onmouseout	The user moves the mouse away from an HTML element
+  onkeydown	The user pushes a keyboard key
+  onload	The browser has finished loading the page
+------------------------------------  
+> String in JS
+
+  You can create strings using single quotes ('), double quotes ("), or backticks (`).
+  
+  String methods - 
+  ----------------
+  length: Returns the length of the string.
+  
+  concat(): Combines two or more strings.
+  let name = "Sujith";
+  let last = "V S";
+  let description = " is a perfect man."
+  let final = name.concat(last, description);
+  console.log(final);  
+  
+  We should always assign string concatenate to a value. Here i used final to assign.
+  
+  indexOf(): Returns the index of the first occurrence of a specified value.
+  
+  slice(): Extracts a portion of a string.
+  
+  toUpperCase(): Converts the string to uppercase.
+  
+  toLowerCase(): Converts the string to lowercase.
+  
+  trim(): Removes whitespace from both ends of a string.
+  
+  
+  String Immutability - Strings in JavaScript are immutable, meaning that once a string is     created, its value cannot be changed. However, you can create a new string with the desired modifications.
+  
+  Escape Characters - 
+  -----------------
+  Special characters can be included in strings using escape characters, such as \n for a new line or \t for a tab.
+  let multilineStr = 'This is a multiline\nstring.';
+  
+  Template literals - 
+  -----------------
+  Introduced in ECMAScript 6 (ES6), template literals allow for more flexible string formatting. They are created using backticks and can include variables directly.
+  let greeting = `Hello, ${name}!`;
+
+----------------------------------------
+JS Numbers
+----------
+JavaScript uses the + operator for both addition and concatenation.
+Numbers are added. Strings are concatenated.
+
+In case of + operator, concatination happens, but in all other arithmetic operations the js will try toJavaScript will try to convert strings to numbers in all numeric operations:
+let x = "100";
+let y = "10";
+let z = x * y;
+
+NaN - Not a Number - Trying to do arithmetic with a non-numeric string will result in NaN (Not a Number):
+
+You can use the global JavaScript function isNaN() to find out if a value is a not a number:
+----------------------------------------
+BigInt
+------
+JavaScript integers are only accurate up to 15 digits. numbers beyond 15 digits are stored in bigint.
+------------------------------------------
+JS Array
+--------
+An array is a special variable, which can hold more than one value.
+
+const cars = ["Saab", "Volvo", "BMW"];
+
+- Creating array using array constructor.
+const cars = new Array("Saab", "Volvo", "BMW");
+
+-Converting an array to string.
+The JavaScript method toString() converts an array to a string of (comma separated) array values.
+
+- Array length.
+The length property of an array returns the length of an array (the number of array elements).
+
+- Adding array elements.
+
+The easiest way to add a new element to an array is using the push() method:
+
+const fruits = ["Banana", "Orange", "Apple"];
+fruits.push("Lemon");
+
+- The Difference Between Arrays and Objects:
+In JavaScript, arrays use numbered indexes.  
+
+In JavaScript, objects use named indexes.
+
+- How to Recognize an Array
+Array.isArray(fruits);
+------------------------------------
+- Javascript Date Object.
+const d = new Date();
+
+----------------------------------------
+- Javascript math object.
+
+The JavaScript Math object allows you to perform mathematical tasks on numbers.
+
+------------------------------------
+- JS Random.
+Math.random() returns a random number between 0 (inclusive),  and 1 (exclusive):
+
+----------------------------------
+- JavaScript Booleans
+
+A JavaScript Boolean represents one of two values: true or false.
+You can use the Boolean() function to find out if an expression (or a variable) is true.
+Boolean(10 > 9)
+
+------------------------------------
+- JS Comparison.
+
+==, ===, !=, !==, >, <, >=, <=
+-----------------------------------
+Switch
+
+switch (6) {
+  case 0:
+    day = "Sunday";
+    break;
+  case 1:
+    day = "Monday";
+    break;
+  case 2:
+    day = "Tuesday";
+    break;
+  case 3:
+    day = "Wednesday";
+    break;
+  case 4:
+    day = "Thursday";
+    break;
+  case 5:
+    day = "Friday";
+    break;
+  case  6:
+    day = "Saturday";
+}
+
+switch (new Date().getDay()) {
+  case 6:
+    text = "Today is Saturday";
+    break;
+  case 0:
+    text = "Today is Sunday";
+    break;
+  default:
+    text = "Looking forward to the Weekend";
+}
+The default keyword specifies the code to run if there is no case match:
+
+-------------------------------------
+Loops in JS
+
+for, while, do-while, for in, for of
+
+-for in
+
+The for...in loop is used to iterate over the properties of an object.
+
+const person = { name: 'John', age: 30, job: 'Developer' };
+for (let key in person) {
+    console.log(key, person[key]);
+}
+
+-for of
+The for...of loop is introduced in ECMAScript 6 and is used to iterate over iterable objects like arrays, strings, etc.
+
+const colors = ['red', 'green', 'blue'];
+for (let color of colors) {
+    console.log(color);
+}
+---------------------------------------
+
+JS Sets.
+
+A JavaScript Set is a collection of unique values.
+Each value can only occur once in a Set.
+
+- Create Set.
+Pass an Array to the new Set() constructor:
+const letters = new Set(["a","b","c"]);
+
+add()	Adds a new element to the Set
+delete()	Removes an element from a Set
+
+-------------------------------------------
+
+JS forEach
+
+The forEach method in JavaScript is used to iterate over elements in an array. It allows you to execute a provided function once for each element in the array. The purpose of forEach is to simplify the process of iterating through arrays and performing operations on each element.
+
+const numbers = [1, 2, 3, 4, 5];
+
+numbers.forEach(function (number, index, array) {
+    console.log(number);
+});
+
+---------------------------------------------
+JS Maps.
+
+In JavaScript, a Map is a data structure that allows you to store key-value pairs where both the keys and values can be of any data type. Unlike the regular JavaScript object, a Map provides a more flexible and reliable way to store and retrieve data.
+
+Map provides methods for adding, retrieving, and deleting entries. Some common methods include set(), get(), has(), and delete()
+-----------------------------------------
+
+JS Type conversion.
+
+ - Number() - to convert to number.
+ - String() - to convert to string.
+ 
+------------------------------------------
+
+RegEx - RegularExpression
+
+It is related to string.
+
+It is used to test weather a string has specific word or character that we want.
+Or to extract a word or substring from a string. We use regEx.
+
+It is mainly used in JS for form validation or to extrract s data from a string.
+
+WE create patterns which are rules. Then we pass both the pattern and input to the regEx library and it will validate it.
+
+IN JS we write patterns inside the forward slash. /...../
+
+----------------------------------------------
+JS Operator Precedence
+
+Operator precedence describes the order in which operations are performed in an arithmetic expression.
+
+Multiplication (*) and division (/) have higher precedence than addition (+) and subtraction (-).
+------------------------------------------------
+
+JS Errors
+
+The try statement defines a code block to run (to try).
+
+The catch statement defines a code block to handle any error.
+
+The finally statement defines a code block to run regardless of the result.
+
+The throw statement defines a custom error.
+---------------------------------------------------
+
+JS Scope.
+
+Scope determines the accessibility (visibility) of variables.
+
+JavaScript variables have 3 types of scope:
+Block scope
+Function scope
+Global scope
+
+Block Scope -
+Variables declared inside a { } block cannot be accessed from outside the block.
+
+Function Scope - 
+Variables declared within a JavaScript function, are LOCAL to the function.
+
+Global Scope - 
+Variables declared Globally (outside any function) have Global Scope.
+Global variables can be accessed from anywhere in a JavaScript program.
+
+------------------------------------------------
+JS Hoisting.
+
+Hoisting is JavaScript's default behavior of moving declarations to the top.
+
+In JavaScript, a variable can be declared after it has been used.
+
+In other words; a variable can be used before it has been declared.
+
+Hoisting is JavaScript's default behavior of moving all declarations to the top of the current scope (to the top of the current script or the current function).
+
+
+Certainly! Hoisting in JavaScript is a behavior where variable and function declarations are moved to the top of their containing scope during the compilation phase. This means that you can use variables and call functions in your code before they are actually written in the code. However, only the declarations are moved to the top, not the initializations.
+
+---------------------------------------------------------
+this keyword in event handlers
+
+In HTML event handlers, this refers to the HTML element that received the event.
+<button onclick="this.style.display='none'">
+  Click to Remove Me!
+</button>
+
+------------------------------------------
+Arrow function.
+
+hello = () => {
+  return "Hello World!";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  

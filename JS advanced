@@ -1,0 +1,261 @@
+Types of datatype
+------------------
+
+Primitive datatype
+------------------
+number, string
+
+If  we pass a primitive datatype value to a function as an argument, only the value of the variable will be passed not the reference of the memory address along with it. SO no change will be there for the original value which has been passed. It is known as call by value.
+let a = 20;
+
+function test(x){
+    x += 1;
+    console.log("x", x);
+}
+
+test(a);
+console.log("a:", a);
+
+Non Primitive datatype(complex datatype)
+----------------------
+object
+
+
+let a = [3, 4, 6];
+let b = 32;
+
+function call(x, y){
+    x[1] = 99;
+    y = "Sujith";
+    console.log("x & y", x, y);
+
+}
+
+call(a, b);
+
+console.log("a & b", a, b);
+
+IN the above code, the value of a will be changed. But the value of b will not be changed, instead the value of y will be changed. It is known as call by reference.
+
+> Optional chaining.
+--------------------
+
+object?.property
+object?.method()
+
+The expression to the left of the ?. operator is evaluated.
+If the evaluated value is not nullish, the expression proceeds normally, and the property is accessed or the method is called.
+If the evaluated value is nullish, the entire expression evaluates to undefined.
+
+
+> Throttling
+------------
+
+
+In JavaScript, throttling is a technique used to limit the number of times a function can be called within a specific time period. This is particularly useful for scenarios where frequent calls to a function might be unnecessary or even detrimental to performance.
+
+
+The throttle function takes a function (func) and a time delay (delay).
+It returns a new function that, when called, checks if enough time has passed since the last execution of func.
+If the time delay has elapsed, it calls func, updates the last call timestamp, and prevents further calls until the next time delay.
+
+In the setInterval part of the code, we attempt to call the throttledTask every 200 milliseconds. However, due to throttling, the actual function execution will only occur at most once every 1000 milliseconds, as specified by the delay parameter. This helps control the rate at which the function is executed.
+
+Throttle is created using throttle function. throttle has a function and thime intervel as an argument.
+
+---------------------------------------------
+Implicit coercion & Explicit coercion
+-------------------------------------
+
+Implicit coercion: The most common type, happening automatically during operations or comparisons without programmer intervention.
+Explicit coercion: You can also use functions like Number(), String(), or Boolean() to explicitly convert a value to a specific data type.
+
+----------------------------------------------
+Generator function:
+
+function* myFunc(){
+    id = 0;
+    while(true){
+        yield id;
+        id++;
+    }
+}
+
+const generatorObject = myFunc();
+console.log(generatorObject.next().value)
+console.log(generatorObject.next().value)
+console.log(generatorObject.next().value)
+console.log(generatorObject.next().value)
+console.log(generatorObject.next().value)
+console.log(generatorObject.next().value)
+console.log(generatorObject.next().value)
+console.log(generatorObject.next().value)
+
+---------------------------------------------------
+proxy object
+------------
+
+const targetObject = {
+  name: 'John',
+  age: 30
+};
+
+const handler = {
+  get: function(target, prop) {
+    console.log(`Getting property: ${prop}`);
+    return target[prop];
+  },
+  set: function(target, prop, value) {
+    console.log(`Setting property: ${prop} to ${value}`);
+    target[prop] = value;
+    return true;
+  }
+};
+
+const proxyObject = new Proxy(targetObject, handler);
+
+console.log(proxyObject.name); // Logs: Getting property: name; Retrieves and prints 'John'
+proxyObject.age = 31; // Logs: Setting property: age to 31
+console.log(proxyObject.age); // Logs: Getting property: age; Retrieves and prints 31
+
+---------------------------------------------------
+
+call() method
+-------------
+
+- Using one objects methods in another object.
+
+let myAddress = {
+    firstName: "Sujith",
+    lastName: "V S",
+    fullname: function(){
+        console.log(this.firstName + " " + this.lastName);
+    }
+}
+myAddress.fullname();
+
+let hisAddress = {
+    firstName: "Anand",
+    lastName: "V J",
+}
+
+myAddress.fullname.call(hisAddress);
+
+-----
+
+- using outer function inside the objects using call() method
+
+
+let fullname = function(){
+        console.log(this.firstName + " " + this.lastName);
+}
+
+
+let myAddress = {
+    firstName: "Sujith",
+    lastName: "V S",
+}
+
+
+let hisAddress = {
+    firstName: "Anand",
+    lastName: "V J",
+}
+
+fullname.call(hisAddress);
+fullname.call(myAddress);
+
+-----
+
+- passing argument to function through call() methos
+
+let fullname = function(homeTown){
+        console.log(this.firstName + " " + this.lastName + " from " + homeTown);
+}
+
+let myAddress = {
+    firstName: "Sujith",
+    lastName: "V S",
+}
+
+
+let hisAddress = {
+    firstName: "Anand",
+    lastName: "V J",
+}
+
+fullname.call(hisAddress, "Mumbai");
+fullname.call(myAddress, "Pune");
+
+------------------------------------------------------
+
+apply() method
+--------------
+
+let fullname = function(homeTown, state){
+        console.log(this.firstName + " " + this.lastName + " from " + homeTown + ", " + state);
+}
+
+let myAddress = {
+    firstName: "Sujith",
+    lastName: "V S",
+}
+
+
+let hisAddress = {
+    firstName: "Anand",
+    lastName: "V J",
+}
+
+fullname.apply(hisAddress, ["Mumbai", "Maharashtra"]);
+fullname.apply(myAddress, ["Kochi", "Kerala"]);
+
+--------------------------------------------------------
+
+bind() method
+-------------
+
+let fullname = function(homeTown, state){
+        console.log(this.firstName + " " + this.lastName + " from " + homeTown + ", " + state);
+}
+
+let hisAddress = {
+    firstName: "Anand",
+    lastName: "V J",
+}
+
+let callMethod = fullname.bind(hisAddress, "Mumbai", "Maharashtra");
+
+callMethod();
+
+-------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

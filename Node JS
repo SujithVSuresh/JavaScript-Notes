@@ -1,0 +1,172 @@
+NODEJS is a javascript runtime built on googles v8 engine.
+Node js is single threaded, event driven and non blocking.to execute a program written in js
+node js is a runtime environment for executing js outsode of browser
+Node js is a run-time environment includes everything you nedd 
+--------------------------------------
+We can run js code in terminal using REPL.
+REPL - Read, Eval, Print, Loop
+
+Read - Read user input
+Eval - Evaluate user input
+Print - Print or Ouput the result
+Loop  - Return and wait for new input.
+
+A REPL (Read-Eval-Print Loop) is a tool that allows you to interact with a programming language by typing commands and immediately seeing the results. It reads your input, evaluates it, prints the result, and then waits for your next input. It provides an interactive and iterative way to test and experiment with code without the need to create a full program or script.
+
+----------------------------------------
+INPUT FROM USER
+--------------
+
+To input from the user we can use readline module.
+To import a module from the user we can use require(''). That require will return an object.
+const readline = require('readline')
+
+const readline = require('readline');
+const rl = readline.createInterface({
+    //it will define from where it has to enter the input.
+    input: process.stdin,
+    output: process.stdout
+})
+
+rl.question("Enter your name: ", (name) => {
+    console.log("You entered: "+name);
+    rl.close();
+})
+
+//to listen to an event
+rl.on('close', () => {
+    console.log("Interface closed")
+    process.exit(0);
+})
+
+
+-------------------------------------------
+
+Architectur of nodejs
+---------------------
+node has several dependencies on which it depends on to work properly.
+The most important dependencies are V8 engine and LIBUV.
+V8 engine is responsooble for executing js code. it converts js code into machine code.
+v8 alone can create node so that we have LIBUV. iT is a opensource libreary responsoble for dealing with asynchronous input and output.
+From browser we cannot use js to read or write files from clients machine because of security reasons.But with node js we have that capability and it is provided by libuv.It givr node access to computing OS, file system etc...
+
+It also implements two important features of node js, 
+-Event loop 
+-Thread pool
+
+----------------------------------------------
+
+- Single threaded web server(non-blocking asynchronous i/o)
+- Multithreaded web server(blocking synhronous i/o)
+
+
+----------------------------------------------
+
+Module
+------
+In node there are built in module or we can create our own modules.
+
+Accessing build-in module in node:
+
+const os = require("os");
+console.log(os.type())
+console.log(os.platform())
+
+----
+To export a module in a file:
+const car = {
+    brand: "Suzuki",
+    model: "E2"
+}
+module.exports = car;
+
+To access exported file in another file:
+const car = require("./index.js")
+-----
+Another way to export a module in a file:
+const car = {
+    brand: "Suzuki",
+    model: "E2"
+}
+exports.car = car;
+This will exports the property of an object it points to.
+Output: { car: { brand: 'Suzuki', model: 'E2' } }
+
+-----------------------------------------------
+Node package manager(NPM)
+-------------------------
+
+It allows us too install different packages in our node application.
+
+-> npm init
+npm init is a command in Node.js and npm (Node Package Manager) that is used to initialize a new Node.js project. When you run npm init in the command line, it prompts you with a series of questions to gather information about your project, and then it generates a package.json file based on your responses. The package.json file is a crucial configuration file for Node.js projects, and it contains metadata about the project as well as a list of dependencies.
+
+-> npm init -y
+When you run npm init -y, the -y flag stands for "yes" or "assumeyes," and it is used to automatically accept all default values during the initialization process without prompting you for input. This is useful when you want to quickly set up a new Node.js project with default configurations and accept the standard settings provided by npm without having to manually answer each question.
+
+-> node_modules folder - 
+In a Node.js project, the node_modules folder is a directory that typically contains all the third-party libraries and dependencies that your project relies on. When you use npm (Node Package Manager) to install packages or modules for your project, these packages are downloaded and stored in the node_modules folder.
+
+-> To instal a package:
+npm install packageName 
+or
+npm i packageName
+
+-> -save / --save-dev
+While installing a package, we can use -save / --save-dev flags. With npm 5.0.0 and later, you can install packages without explicitly using --save or --save-dev. npm automatically determines whether a package is a runtime or development dependency based on the context in which it is installed.
+
+--save to add a package as a runtime dependency and list it in the dependencies section of package.json. It is required at runtime.
+
+--save-dev to add a package as a development dependency and list it in the devDependencies section of package.json. devDependencies are the modules which are only required during development.
+
+Note: if we do not specify any flage then it will be added defaultly to the deoendencies seciton of package.json file.
+
+-----------------------------------------------
+NPM Script
+-----------
+
+We normally write 'node filename' to run a js file. But we can do the same thing using npm scripts.
+We can specify the commands in package.json file.
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "execute": "node index.js",
+    "watch": "node index.js",
+    "start": "node index.js"
+  },
+  'npm run execute' will execute the index.js file
+  'npm start' will execute the index.js file
+  
+> Types of NPM packages
+  There are two types of packages in node:
+  - local packages and global packages
+  
+  Local packagea are installed locally on our project and it is only accessible only from our project.
+  eg: npm install express
+   Global packages are installed globally on your system, making them accessible from any directory.
+   eg: npm install -g nodemon
+
+-------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,210 @@
+Javascript
+-----------
+
+
+> Dom - Document Object Model()
+
+- It is an a API.
+- HTML DOM is the object oriented representation of the web page.
+- When web page is loaded, browser creates the HTML DOM of the page.
+-Represents all HTML Elements as Object.
+- Elements in html dos is called node
+- Html dom has parent child relationship.
+  eg : 
+  <body>
+  <h1>Hello world</h1> 
+  </body>
+  Here parent node of h1 is body. And child node of h1 is Hello world.
+  
+- JS uses DOM to access the HTML elements.
+- Using DOM Javascript can: change/remove/create html elements and attributes.
+- CHange the css properties.
+- React or create HTML evnets.
+
+> Accessing DOM Object:
+1. getElementById()
+2. getElementByName()
+3. getElementByTagName()
+4. getElementByClassName()
+5. CSS Selectors
+
+-----------------------------------
+%% Get element by id %%
+
+> var a = getElementById("head1") - 
+  getElementById("head1") This will get the full element which has the mentioned id.
+
+
+> console.log(a.innerHTML); - This is used to access the value inside an element. Like Hello WOrld.
+  # To change / add text
+  a.innerHtml = "Learn Javascript"; - This can be used to assign or replace value inside an element.
+  # To change / add style
+
+%% Get element by class name %%
+
+> var a = document.getElementsByClassName("head1");
+
+  Since same class name can be given to multiple elements, if we 
+  use getElementByClassName, then multiple elements will be selected at the same 
+  time.
+  So we can select each element seperately by using its index value.
+
+  a[0].innerHTML = "Good Morning";
+
+
+%% Get element by class name %%
+
+  Getting that complete element using its name.
+  This is same as above.
+
+
+  var a = document.getElementsByTagName("p")
+  a[0].innerHTML = "Changed Paragraph";
+  console.log(a);
+-----------------------------------------------
+%% Get element by name %%  
+
+<input type="text" name="text1">
+var a = document.getElementsByName("text1")[0];
+
+While accessing the element by its name we always have to use the 
+index value, even if there is only one element with that name.
+
+We can take the value of the input as 
+a.value;
+
+index.JS
+--------
+var a = document.getElementsByName("text1")[0];
+
+var b = document.getElementById("head");
+
+function formSubmit(){
+    b.innerHTML = a.value;
+}
+
+index.html
+----------
+
+<body>
+    <h5 id="head"></h5>
+
+
+    <input type="text" name="text1">
+
+    <input type="submit" onclick="formSubmit()">
+
+    <script src="index.js"></script>
+</body>
+
+----------------------------------
+
+%% get element by CSS Selector(QuerySelectorAll)
+
+> accessing element using tag name.
+We must use index value.
+
+var a = document.querySelectorAll("h1");
+
+a[0].innerHTML = "Learn HTML";
+
+> accessing element using clas name.
+var a = document.querySelectorAll(".hclass");
+
+a[0].style.color = "red";
+a[1].innerHTML = "Learn Java";
+
+> accessing element using id name.
+
+if we are using the id, it is better to use the querySelector instead
+of the querySelectorAll.
+
+var a = document.querySelector("#head1")
+
+a.innerHTML = "Learn Java";
+---------------------------------------
+
+%%Creating element using DOM%%
+
+index.html
+<body>
+    <input type="button" value="Create" onclick="create()">
+    <input type="button" value="Remove">
+
+    <script src="index.js"></script>
+</body>
+
+index.js
+var heading = document.createElement("h1");
+
+function create(){
+    heading.innerHTML = "Hello World";
+    document.body.appendChild(heading);
+}
+
+The above code will create an element in a button click.
+
+document.createElement("h1"); - is used to create an element.
+document.body.appendChild(heading); - is used to add the created element inside the body tag.
+------------------------------------------
+
+%% Remove element using DOM %%
+
+function remove(){
+    heading.remove();
+}
+-------------------------------------------
+
+%%Create events using DOM%%
+
+
+heading.addEventListener("mouseover", changeBG); - we use addEventListener to create an event using DOM.
+
+
+index.html
+----------
+
+<body>
+    
+    <h1 id="head">Hello World</h1>
+    <input type="button" id="btn" value="Click here">
+
+    <script src="index.js"></script>
+</body>
+
+
+index.js
+--------
+
+var heading = document.getElementById("head");
+
+var btn = document.getElementById("btn");
+
+btn.addEventListener("click", changeColor);
+
+heading.addEventListener("mouseover", changeBG);
+
+function changeColor(){
+    heading.style.color = "red";
+}
+
+function changeBG(){
+    heading.style.backgroundColor = "yellow";
+}
+
+--------------------------------------
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
