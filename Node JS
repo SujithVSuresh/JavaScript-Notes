@@ -47,15 +47,42 @@ Architectur of nodejs
 node has several dependencies on which it depends on to work properly.
 The most important dependencies are V8 engine and LIBUV.
 V8 engine is responsooble for executing js code. it converts js code into machine code.
-v8 alone can create node so that we have LIBUV. iT is a opensource libreary responsoble for dealing with asynchronous input and output.
-From browser we cannot use js to read or write files from clients machine because of security reasons.But with node js we have that capability and it is provided by libuv.It givr node access to computing OS, file system etc...
+v8 alone can't create node so that we have LIBUV. iT is a opensource libreary responsoble for dealing with asynchronous input and output.
+From browser we cannot use js to read or write files from clients machine because of security reasons.But with node js we have that capability and it is provided by libuv.It gives node access to computing OS, file system, networking etc...
 
-It also implements two important features of node js, 
--Event loop 
--Thread pool
+LIBUV also implements two important features of node js, 
+-Event loop - is responsible for executing easy tasks like executing callback function and network i/o
 
+
+Other dependencis of node:
+HTTP Parser - 
+C-ARES - for dns requests
+OPENSSL - for cryptography.
+ZLIB - for compression.
+
+--------
+
+What is a process?
+A process is a what facilitates the execution of a program. A process is just a program which is currently executing.
+
+What is thread?
+A thread is what is responsible for executing a program code in the process.By default, every process has one main thread.
+
+---------
+
+> All normal code executes in main thread.
+> All asynchronous code executes in thread pool.
+> Once the job of the asynchronous code is complete by staying in the threadpool, the call back function in the asynchronous code will be pushed to the event loop. In the event loop the callback function willl wait for its execution. And when the main thread is empty, the callbackk function will be executed. When the main thread is empty the event loop will push the callback function to the main thread where that callback function get executed.
+
+> A thread pool has 4 main htreads.
 ----------------------------------------------
+Event LOop
+----------
 
+Event loop is where alll the callback function wait for thior execution.
+Event loop offloads a casllback function which is doing heavy task like file reading, to the thread pool.
+NODEjs uses event  driven architecture and id build around callback function.
+----------------------------------------------
 - Single threaded web server(non-blocking asynchronous i/o)
 - Multithreaded web server(blocking synhronous i/o)
 
@@ -146,6 +173,790 @@ We can specify the commands in package.json file.
    eg: npm install -g nodemon
 
 -------------------------------------------------
+NPX
+----
+
+NPX stands for Node Package eXecute. It is simply an NPM package runner. It allows developers to execute any Javascript Package available on the NPM registry without even installing it. NPX is installed automatically with NPM version 5.2.
+
+package.js
+----------
+The package.json file is a crucial configuration file in Node.js projects. It serves as a manifest for your project, providing metadata about the project, its dependencies, scripts, and other important details.
+
+------------------------------------------------
+Package versions
+----------------
+"version": "1.0.0"
+
+X.Y.Z
+
+x -> Major version
+Y -> Minor version
+Z -> Patch version
+
+-----
+> "node": "<=6.0.0" - will accept all versions greater than or equal to 6.0.0
+
+> "node": "<=6.0.0" - will accept all versions less than or equal to ...
+
+> "webpack": "^5.90.3" - this will accept all changes in patch and minor release.
+
+> "package-name": "~1.2.3" - this will update only the patch release, not the minor and major release.
+
+If you specify an exact version (e.g., "package-name": "1.2.3") in your package.json, npm will install that exact version.
+To update, you need to manually change the version in your package.json file and run npm install again.
+
+npm update
+This command updates all packages to the latest versions based on the version constraints specified in your package.json. It respects semantic versioning (SemVer) rules, ensuring that minor and patch updates are applied while avoiding major updates that might introduce breaking changes.
+
+
+Uninstalling packages
+---------------------
+
+To remove from devDependencies use -D
+npm uninstall -D uuid
+
+To remove from dependencies use -S
+npm uninstall -S uuid
+
+We can also use -D and -S for installing package as well.
+
+To remove packages that are installed globally
+npm uninstall -g uuid
+
+--------------------------------------------------------
+
+HTTP Server
+-----------
+
+Inorder to build web serverss in nodejs we need to do two things:
+Step1: CREATE A SERVER
+Step2: START THE SERVER
+
+const http = require('http');
+
+//Step1: CREATE A SERVER
+const server = http.createServer((request, response) => {
+    // this callback function get executed everytime a new request hits the server.
+    console.log(response);
+    
+    //to send response to the client.
+    response.end("Hello from the server");
+})
+
+//Step2: START THE SERVER
+server.listen(8000, '127.0.0.1', ()=>{
+    console.log("Server has started")
+})
+
+We cant send any request until the server is not running.
+hostname = '127.0.0.1'
+port = 8000
+--------------------------------------------------------------
+How Web Works
+-------------
+1. DOmain name is resolved from the DNS
+2. TCP/IP connection has been made b/w the client and the server.
+3. Send http request and receive http responsive.
+
+HTTP request contain some information related to that request.
+Request contain:
+- Request type.(GET, POST, PUT, DELETE)
+- Resource we are trying to access(eg: /Home)
+- Http version(HTTP/1.1)
+- Request header.(It contain information like browser name, accept-language, and many nore info...)
+- Body
+
+
+HTTP response contain some information related to that response.
+Response contain:
+- Status code.
+- Response header.(Contain information about the response which the server is sending back.)
+  We can also create our own custom header and send it with response.
+- Body(Some content like html file).
+  If the html page is using css or js file then the browser will make another request to download the css or js file. 
+  
+  
+>> TCP/IP is the communication protocol that define how data travel across the web.
+
+-------------------------------------------------------------
+
+How request and response works
+-------------------------------const http = require('http');
+const fs = require('fs');
+
+const html = fs.readFileSync('./templates/hello.html', 'utf-8')
+
+//Step1: CREATE A SERVER
+const server = http.createServer((request, response) => {
+    // this callback function get executed everytime a new request hits the server.
+    console.log(response);
+    
+    //to send response to the client.
+    response.end(html);
+})
+
+//Step2: START THE SERVER
+server.listen(8000, '127.0.0.1', ()=>{
+    console.log("Server has started")
+})
+
+We can also send html file as response using fs module.
+Network sectioon in developer tool will have all the request and response information.
+-----------------------------------------------------------------
+
+What is routing?
+-----------------
+Routing defines the way in which the client requests are handled by application endpoint.
+By implementing routing we can make our application respond to different urls.
+
+Different types of URL:
+1. File based URL - in this url the filename will be specified that we want to see in the browser.
+   eg: www.nodeapp.com/about.html
+2. Resource based URL
+   eg: www.nodeapp.com/Home
+   Here the resource based url is Home. Based on the resource name the backenfd application will send us the corresponding file.
+   
+3. Route Parameter
+   www.nodeapp.com/Product/101
+   Here Product is the resource and 101 is the parameter. 
+   
+4. Query String
+   www.nodeapp.com/Book?author=john&id=101
+   Query string is a key value pair. We write the query string after a ?
+   
+Using routing we can extract, query string, resourse and parameter from the url.   
+   
+------------------------------------------------------------------
+> To get url resource :- 
+let path = request.url;
+
+Routing using if statement
+//Step1: CREATE A SERVER
+const server = http.createServer((request, response) => {
+    let path = request.url;
+    if(path === '/' || path.toLocaleLowerCase() == '/home'){
+        response.end("You are in home page");
+    }else if(path.toLocaleLowerCase() == '/about'){
+        response.end("You are in about page");
+    }else if(path.toLocaleLowerCase() == '/contact'){
+        response.end("You are in contact page");
+    }else{
+        response.end("Error 404: Page not found");
+    }
+})
+----------------------------------------------------------------
+
+Sending HTML response based on routes
+-------------------------------------
+
+const server = http.createServer((request, response) => {
+    let path = request.url;
+    if(path === '/' || path.toLocaleLowerCase() == '/home'){
+        response.end(html.replace('{{%CONTENT%}}', 'YOU ARE IN HOME PAGE'));
+    }else if(path.toLocaleLowerCase() == '/about'){
+        response.end(html.replace('{{%CONTENT%}}', 'YOU ARE IN ABOUT PAGE'));
+    }else if(path.toLocaleLowerCase() == '/contact'){
+        response.end(html.replace('{{%CONTENT%}}', 'YOU ARE IN CONTACT PAGE'));
+    }else{
+        response.end(html.replace('{{%CONTENT%}}', 'Error 404: Page not found!'));
+    }
+})
+
+index.html
+<body>
+    <a href="Home">Home</a>
+    <a href="Products">Products</a>
+    <a href="About">About</a>
+    <a href="Contact">Contact</a>
+    <h3>{{%CONTENT%}}</h3>    
+</body>
+------------------------------------------------------------------
+
+Setting headers for response
+----------------------------
+
+Setting header using header.writeHeader()
+
+//Step1: CREATE A SERVER
+const server = http.createServer((request, response) => {
+    let path = request.url;
+    if(path === '/' || path.toLocaleLowerCase() == '/home'){
+        response.writeHead(200, {
+            //Content type tells what kind of content we are sending as response
+            'Content-Type' : 'text/html',
+            //We can also send custom data as header reesponse
+            'my-header': "Hello world"
+        })
+        response.end(html.replace('{{%CONTENT%}}', 'YOU ARE IN HOME PAGE'));
+    }else if(path.toLocaleLowerCase() == '/about'){
+        response.writeHead(200, {
+            'Content-Type' : 'text/html',
+            'my-header': "Hello world"
+        })
+        response.end(html.replace('{{%CONTENT%}}', 'YOU ARE IN ABOUT PAGE'));
+    }else if(path.toLocaleLowerCase() == '/contact'){
+        response.writeHead(200, {
+            'Content-Type' : 'text/html',
+            'my-header': "Hello world"
+        })
+        response.end(html.replace('{{%CONTENT%}}', 'YOU ARE IN CONTACT PAGE'));
+    }else{
+        response.writeHead(404, {
+            'Content-Type' : 'text/html',
+            'my-header': "Hello world"
+        })
+        response.end(html.replace('{{%CONTENT%}}', 'Error 404: Page not found!'));
+    }
+})
+------------------------------------------------------------------
+Working with JSON data
+----------------------
+The only diffreence between json data and js object is that, in json data the keys should be wrapped inside "".
+
+We can transform the json data to a js object and then we can display that js object in our html page.
+
+const http = require('http');
+const fs = require('fs');
+
+const html = fs.readFileSync('./templates/hello.html', 'utf-8')
+let products = JSON.parse(fs.readFileSync('./Data/products.json', 'utf-8'))
+let productListHtml = fs.readFileSync('./templates/product-list.html', 'utf-8')
+
+
+let productHtmlArray = products.map((prod) => {
+    let output = productListHtml.replace('{{%ID%}}', prod.id)
+    output = output.replace('{{%NAME%}}', prod.name)
+    output = output.replace('{{%AGE%}}', prod.age)
+    output = output.replace('{{%EMAIL%}}', prod.email)
+    output = output.replace('{{%CITY%}}', prod.city)
+
+    return output;
+}) 
+
+//Step1: CREATE A SERVER
+const server = http.createServer((request, response) => {
+    let path = request.url;
+    if(path === '/' || path.toLocaleLowerCase() == '/home'){
+        response.writeHead(200, {
+            //Content type tells what kind of content we are sending as response
+            'Content-Type' : 'text/html',
+            //We can also send custom data as header reesponse
+            'my-header': "Hello world"
+        })
+        response.end(html.replace('{{%CONTENT%}}', productListHtml));
+    }else if(path.toLocaleLowerCase() == '/about'){
+        response.writeHead(200, {
+            'Content-Type' : 'text/html',
+            'my-header': "Hello world"
+        })
+        response.end(html.replace('{{%CONTENT%}}', 'YOU ARE IN ABOUT PAGE'));
+    }else if(path.toLocaleLowerCase() == '/contact'){
+        response.writeHead(200, {
+            'Content-Type' : 'text/html',
+            'my-header': "Hello world"
+        })
+        response.end(html.replace('{{%CONTENT%}}', 'YOU ARE IN CONTACT PAGE'));
+    }else if(path.toLocaleLowerCase() == '/products'){
+        let productResponseHtml = html.replace('{{%CONTENT%}}', productHtmlArray.join(","))
+        response.writeHead(200, {
+            'Content-Type': 'text/html'
+        });
+        response.end(productResponseHtml);
+    }else{
+        response.writeHead(404, {
+            'Content-Type' : 'text/html',
+            'my-header': "Hello world"
+        })
+        response.end(html.replace('{{%CONTENT%}}', 'Error 404: Page not found!'));
+    }
+})
+
+------------------------------------------------------------------
+Parsing query strig from URL
+----------------------------
+
+url package - we can use url package to parse the string.
+const url = require('url');
+
+This url object has a method parse() 
+parse() accept a url as first parameter and boolean value as second parameter. So we can pass request.url to parse(). As the second argument, if we specify tru, then it will parse the query string else it will not parse the query string.
+const x = url.parse(request.url, true)
+The above x will return an object:
+Url {
+  protocol: null,
+  slashes: null,
+  auth: null,
+  host: null,
+  port: null,
+  hostname: null,
+  hash: null,
+  search: '?id=2&name=iphone',
+  query: [Object: null prototype] { id: '2', name: 'iphone' },
+  pathname: '/Products',
+  path: '/Products?id=2&name=iphone',
+  href: '/Products?id=2&name=iphone'
+}
+
+-------------------------------------------------------------------
+
+Module
+------
+A module is another script file from where we can export some values and that values can be used in another script file by simply importing it.
+
+There are 3 types of modules:
+-Core modules (eg: readline, fs, http, url)
+-User defined modules
+-Third party modules or libraries
+
+> This is how we export a function in a file:
+module.exports = function(template, prod){
+
+    return output;
+}
+
+-------------------------------------------------------------------
+Event driven architecture
+--------------------------
+Event driven architecture has three main players:
+- Event emitter -> Event emitter emits an event when something important happens, eg: the request hitting the server, timer expiring, file finishes reading,  
+- Event listener -> When an event is emitted or raised, it is pickedup by event listener
+- Event Handler -> This event listeener fires up the callback function attached to that event listener, when that event happens.That function is called as event handlers.
+
+Most of the nodejs features such as http, filesystem and timer are all build on top of event drivrn architecture.
+
+> Event driven architecture to create server:
+
+//event emitter
+const server = http.createServer(); 
+
+server.listen(8000, '127.0.0.1', ()=>{
+    console.log('listening to requests.....');
+})
+
+//event listener
+server.on('request', (req, res)=>{
+    res.end('Hello from server!');
+})
+//The above callback function is the event handler function.
+
+#This event emitting and listening logic is known as observer pattern in js programming.
+The idea is that the event listener keeps observing the subjects that the listener is waiting for.
+subject here is the event emitter.
+
+---------------------------------------------------------------------
+Emitting and Handling Custom events
+-----------------------------------
+To create custom events we have to use events module.
+const events = require('events');
+
+let myEmitter = new events.EventEmitter() //here we created the instance of the event emitter class
+
+//This is event listener
+myEmitter.on('userCreated', ()=>{
+    console.log('a new user is created')
+})
+
+myEmitter.emit('userCreated');//This will emit an event called userCreated
+
+>> We can create multiple event listeners for same event.
+-----------------------------------------
+myEmitter.on('userCreated', ()=>{
+    console.log('a new user is created')
+})
+
+myEmitter.on('userCreated', ()=>{
+    console.log('A new user is created in the DB')
+})
+
+
+>> To pass arguments to the event listener
+------------------------------------------
+
+myEmitter.on('userCreated', (id, name)=>{
+    console.log(`a new user ${name} with ${id} is created`)
+})
+
+myEmitter.on('userCreated', (id, name)=>{
+    console.log(`a new user ${name} with ${id} is added to DB`)
+})
+
+myEmitter.emit('userCreated', 102, 'Sujith');//This will emit an event called userCreated
+-----------------------------------------------------------------------
+
+ExpressJS
+---------
+
+const express = require('express')
+
+const app = express(); //we call the express class and initialise it to the app variable
+
+//routes
+app.get("/ping", (req, res)=>{
+    res.send("Node express application");
+})
+
+//for starting a server.
+//It will listen for the server to start at port 3000 and consolea message.
+app.listen(3000, () => {
+    console.log("Server started on port 3000");
+})
+
+-----
+> nodemon
+
+nodemon is a tool used in the development of Node.js applications. It is a utility that monitors for changes in your Node.js application and automatically restarts the server when any changes are detected. This eliminates the need to manually stop and restart the server every time you make a change to your code, which can greatly improve development workflow efficiency.
+
+- We installed nodemon module  
+- Added "start": "nodemon server.js" to scripts in package.json file
+
+-----
+> Middleware
+
+Middleware functions are functions which has access to the request and response object.
+Middleware functions can do 3 major things:
+    - making changes to request and response object.
+    - end request and response cycle
+    - call next middleware in a stack. next()
+
+const express = require('express')
+
+const app = express(); //we call the express class and initialise it to the app variable
+
+//middleware function
+const myLogger = function(req, res, next){
+    console.log("Logged");
+    next();
+}
+const requestTime = function(req, res, next){
+    req.reqTime = Date.now();
+    next()
+}
+
+//load middleware function
+app.use(myLogger)
+app.use(requestTime)
+
+app.get('/', function(req, res){
+    res.send(`Current Time: ${req.reqTime}`)
+})
+
+app.listen(3000, ()=>{
+    console.log("App started on port 3000")
+})
+
+When we specify use() method to use the middleware then the node will put the middleware function in a middleware callstack.
+next() will tell the middleware callstack to move to the next middleware.
+
+-----
+> Serving static files in express
+---------------------------------
+To use the static function in our application, we can use the middleware function for that.
+
+app.use(express.static('public')) // This will tell the server to use the static files in the public folder.
+
+- If we use this middleware function, then we can access the static function from the root directory like:
+<img src="/img_girl.jpg">
+
+- How do we serve the staticfile if the public folder structure is like:
+  public/images/photo.png
+        /css/a.css
+        /JS/a.js
+        
+  To so;ve that issue, we can pass an argument to the use method:
+  app.use('/public', express.static('static'))      
+  Here we are specifying the path to the public folder in root directory as first argument. Then we are specifying the folder inside the public folder inside the express.static() method.
+
+- What if we change the static folder name and root folder name. In that case we need to change the hard coded value. so to solve that problem we can use path module.
+
+#Virtual path prefix#
+const path = require('path');
+const publicpath = path.resolve(__dirname, "public") //__dirname is the root directory.
+app.use(publicpath, express.static('public'))
+
+Now to call static method using virtual path we have to use, 
+<img src="public/img_girl.jpg">
+-----
+
+Routing in Express
+------------------
+
+const express = require('express');
+const app = express();
+
+const PORT = 3000;
+
+const data = {
+    id: 1,
+    name: "India",
+    state: "Kerala"
+}
+
+app.get("/", (req, res) => {
+    res.end("Welcome to my homepage");
+})
+
+//Can send any type of data
+app.get("/about", (req, res) => {
+    res.send("Welcome to my about page.");
+})
+
+//To send json data
+app.get("/weather", (req, res) => {
+    res.json(data);
+})
+
+//To send file
+app.get("/weatherone", (req, res) => {
+    res.sendFile("/static/index.html");
+})
+
+app.listen(PORT, ()=>{
+    console.log("Server is started on PORT", PORT)
+})
+
+There are many more response method than this.
+
+-----
+
+Working with views in express
+-----------------------------
+To create dynamic html, we have different view engines. There are different template engine that we csn use with expreess to create dynamic html. eg:Pug, EJS, Handlebars etc..
+
+We have to install pug to use pug in our nodejs application.
+
+
+view directory - is the default directory where our template files are situated. This is the default directory of template engine.
+
+Code:
+
+server.js
+---------
+const express = require('express');
+const app = express();
+
+const PORT = 3000;
+
+//setting the pug template engine
+app.set('view engine', 'pug')
+
+app.get('/', (req, res) => {
+    res.render("index", {title: "Sujith's Express View Engine", h1:"Express Application", p:"Express Template Engine"})
+}).listen(PORT, () => {console.log("Server started on http://localhost:3000")})
+
+index.pug
+---------
+doctype html 
+html
+  title=title
+  body
+    h1=h1
+    p=p
+
+---------------------------------------------
+Core express(Submitting form data)
+------------
+
+server.js
+--------
+const express = require("express")
+const path = require("path")
+const app = express()
+
+const PORT = process.env.PORT || 3000
+
+//initialising pug template engine
+app.set('view engine', 'pug')
+
+//To seriaalize the form data. This is a middleware method and we are passing a middleware to serialize the data
+app.use(express.urlencoded({
+    extended:true
+}))
+
+app.get('/', (req, res) => {
+    res.render("index", {title:"Form Handling"})
+})
+
+app.post('/form_submit', (req, res) => {
+    const username = req.body.username
+    const email = req.body.email
+    res.end(`Your Username is ${username} and Email is ${email}`)
+})
+
+app.listen(PORT, ()=>{
+    console.log(`Listening to requests on http://localhost:${PORT}`)
+})
+
+
+index.pug
+---------
+doctype html 
+html
+  title #{title}
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  
+  body 
+    div.text-center
+      h1.h1.py-4 Simple Form
+    div.container.text-center.w-25 
+      form(method='POST', action='/form_submit')
+        div.form-group
+          input(type='text', name='username', class='form-control', value="", placeholder="Username")
+        div.form-group
+          input(type='text', name='email', class='form-control', value="", placeholder="Email")
+        div.form-group
+          input(type='submit', class='btn btn-primary', value="Submit")  
+
+
+Whenever submitting a form data we have to serialize that form data using an inbuilt middleware:
+app.use(express.urlencoded({
+    extended:true
+}))
+
+-----------------------------------------------
+Session
+-------
+Session are used to track the user activity.
+
+To use session in express applicstion, we need to install a module called express-session
+
+Setup session using middleware method in express
+app.use(session({
+    secret:"Your Secret Key",
+    resave:true,
+    saveUninitialized:true
+}))
+
+Add data to session
+app.get("/", (req, res) => {
+    req.session.name="Sujith";
+    return res.send("Session set")
+})
+
+Show data to session
+app.get("/session", (req, res) => {
+    var name = req.session.name;
+    return res.send(name)
+})
+
+Destroy data in a session
+app.get("/destroy", (req, res) => {
+    req.session.destroy((error)=>{
+        console.log("Session Destroyed")
+    })
+    res.end();
+})
+
+server.js
+---------
+const express = require("express")
+const app = express()
+const session = require("express-session")
+
+const PORT = process.env.PORT || 3000
+
+app.use(session({
+    secret:"Your Secret Key",
+    resave:true,
+    saveUninitialized:true
+}))
+
+app.get("/", (req, res) => {
+    req.session.name="Sujith";
+    return res.send("Session set")
+})
+
+app.get("/session", (req, res) => {
+    var name = req.session.name;
+    return res.send(name)
+})
+
+app.get("/destroy", (req, res) => {
+    req.session.destroy((error)=>{
+        console.log("Session Destroyed")
+    })
+    res.end();
+})
+
+app.listen(PORT, ()=>{
+    console.log(`Listening to requests on http://localhost:${PORT}`)
+})
+-------------------------------------------------
+Cookies
+-------
+cookies are small data that are stored in client side and send to the client along with server request
+
+To work with cookies we need to work with a module named cookie-parser
+
+
+const cookies = require("cookie-parser")
+app.use(cookies());
+
+Setting cookie:
+app.get("/setuser", (req, res) => {
+    //res.cookie() is a method used to set cookies in the response. 
+    res.cookie("userData", users)
+    res.send("User data added to cookies")
+})
+
+
+Reading cookie data:
+app.get("/getuser", (req, res)=>{
+    res.send(req.cookies);
+})
+
+Destroying cookie data:
+app.get("/logout", (req, res) => {
+    res.clearCookie('userData')
+    res.send("User logout successfully")
+})
+
+
+
+server.js
+---------
+const express = require("express")
+const app = express()
+const cookies = require("cookie-parser")
+
+const PORT = process.env.PORT || 3000
+
+//initialising cookie-parser module
+app.use(cookies());
+
+let users = {
+    name: "John",
+    age: 22
+}
+
+app.get("/", (req, res)=>{
+    res.send("Cookies tutorial")
+})
+
+app.get("/setuser", (req, res) => {
+    //res.cookie() is a method used to set cookies in the response. 
+    res.cookie("userData", users)
+    res.send("User data added to cookies")
+})
+
+app.get("/getuser", (req, res)=>{
+    res.send(req.cookies);
+})
+
+app.get("/logout", (req, res) => {
+    res.clearCookie('userData')
+    res.send("User logout successfully")
+})
+
+app.listen(PORT, ()=>{
+    console.log(`Listening to requests on http://localhost:${PORT}`)
+})
+
+-----------------------------------------------------
+
+
+
+
+
 
 
 
