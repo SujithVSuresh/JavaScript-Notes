@@ -952,12 +952,27 @@ app.listen(PORT, ()=>{
 })
 
 -----------------------------------------------------
+Creating Login Page
+--------------------
 
+Modules Installed:-
 
+> ejs 
+> express-session 
+> body-parser
+> uuid
 
+Separation of Concerns (SoC) is a software design principle that advocates for dividing a computer program into distinct sections, each addressing a separate concern. 
 
+>> body-parser - this module is used to parse the incoming request body in the middleware before we use it.
 
+const bodyparser = require("body-parser")
 
+//serializing form data
+app.use(bodyparser.json())
+app.use(bodyparser.urlencoded({extended:true}))
+
+There are other ways to add serialization.
 
 
 
