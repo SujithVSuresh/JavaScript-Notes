@@ -52,6 +52,7 @@ From browser we cannot use js to read or write files from clients machine becaus
 
 LIBUV also implements two important features of node js, 
 -Event loop - is responsible for executing easy tasks like executing callback function and network i/o
+-Thread pool - is used to do heavy tasks like file access, compression etc...
 
 
 Other dependencis of node:
@@ -66,22 +67,24 @@ What is a process?
 A process is a what facilitates the execution of a program. A process is just a program which is currently executing.
 
 What is thread?
-A thread is what is responsible for executing a program code in the process.By default, every process has one main thread.
+Thread is in a process, and a thread is what is responsible for executing a program code in the process.By default, every process has one main thread.
 
 ---------
 
 > All normal code executes in main thread.
 > All asynchronous code executes in thread pool.
 > Once the job of the asynchronous code is complete by staying in the threadpool, the call back function in the asynchronous code will be pushed to the event loop. In the event loop the callback function willl wait for its execution. And when the main thread is empty, the callbackk function will be executed. When the main thread is empty the event loop will push the callback function to the main thread where that callback function get executed.
+Event loop pushes the callback function from the callback queue to the main thread weher that callbackfunction get executed.
 
 > A thread pool has 4 main htreads.
 ----------------------------------------------
 Event LOop
 ----------
 
-Event loop is where alll the callback function wait for thior execution.
-Event loop offloads a casllback function which is doing heavy task like file reading, to the thread pool.
-NODEjs uses event  driven architecture and id build around callback function.
+-Event loop is where alll the callback function wait for thior execution.
+-Event loop offloads a casllback function which is doing heavy task like file reading, conpression, to the thread in the thread pool.
+And each thread in thread pool has the purpose of doing different tasks.
+NODEjs uses event  driven architecture and it is build around callback function.
 ----------------------------------------------
 - Single threaded web server(non-blocking asynchronous i/o)
 - Multithreaded web server(blocking synhronous i/o)
@@ -124,6 +127,8 @@ Node package manager(NPM)
 -------------------------
 
 It allows us too install different packages in our node application.
+It is a command line interface for managing packages and a package reposatory from where we can install and manage packages.
+npm cli is a software that we use to install and manage third party packages. 
 
 -> npm init
 npm init is a command in Node.js and npm (Node Package Manager) that is used to initialize a new Node.js project. When you run npm init in the command line, it prompts you with a series of questions to gather information about your project, and then it generates a package.json file based on your responses. The package.json file is a crucial configuration file for Node.js projects, and it contains metadata about the project as well as a list of dependencies.
@@ -146,8 +151,19 @@ While installing a package, we can use -save / --save-dev flags. With npm 5.0.0 
 
 --save-dev to add a package as a development dependency and list it in the devDependencies section of package.json. devDependencies are the modules which are only required during development.
 
-Note: if we do not specify any flage then it will be added defaultly to the deoendencies seciton of package.json file.
+Note: if we do not specify any flage then it will be added defaultly to the deoendencies seciton of package.json files.
 
+Types of dependencies
+---------------------
+-Regular dependencies: A package is called as a simple or regular dependencies if the working of our application or the code which we are writing depends on that package.
+eg: express package
+-Development dependencies: A package is called as development dependencies, if that package is only required for the development purpose and on which, the working of our application does not depend.
+eg: nodemon package.
+
+Types of package installs
+-------------------------
+Local install: The package is only available in that project folder, where the package is installed. It cannot be used  outside of the folder.
+Global install: The package is installed globally in the machine and can be accessed from any folder or any project directory.
 -----------------------------------------------
 NPM Script
 -----------
@@ -449,7 +465,7 @@ const server = http.createServer((request, response) => {
             'Content-Type' : 'text/html',
             'my-header': "Hello world"
         })
-        response.end(html.replace('{{%CONTENT%}}', 'YOU ARE IN ABOUT PAGE'));
+        respoconsoleer.nse.end(html.replace('{{%CONTENT%}}', 'YOU ARE IN ABOUT PAGE'));
     }else if(path.toLocaleLowerCase() == '/contact'){
         response.writeHead(200, {
             'Content-Type' : 'text/html',
@@ -602,6 +618,25 @@ app.listen(3000, () => {
 })
 
 -----
+
+//This middleware will add all this routers inside this server
+app.use('/route', router)
+// => /route is the name of the router. We use /route/login to access it.
+
+//home route
+app.get('/', (req, res)=>{
+
+    if(req.session.user){
+        res.render('dashboard', {user: req.session.user})
+    }else{
+    res.render('base', {title: "Login System"}) 
+    }
+    
+})
+
+app.listen(port, () => {
+    console.log("Listening to the server on http://localhost:3000")
+})
 > nodemon
 
 nodemon is a tool used in the development of Node.js applications. It is a utility that monitors for changes in your Node.js application and automatically restarts the server when any changes are detected. This eliminates the need to manually stop and restart the server every time you make a change to your code, which can greatly improve development workflow efficiency.
@@ -973,6 +1008,280 @@ app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({extended:true}))
 
 There are other ways to add serialization.
+
+-------------------------------------------------------
+
+Read and write files synchronously
+----------------------------------
+
+Reading file:-
+--------------
+
+let textIn = fs.readFileSync('./files/input.txt', 'utf-8')
+
+This will read the file and and return the content. And that content will be stored in textIn variable.
+
+readFileSync() - read file synchronously means the next action will only happens after completely reading the file. There are asynchronous method to do the same task.
+
+Writing file:-
+--------------
+
+let content = `Data read from input.txt: ${textIn}. \nDate created ${new Date()}`
+fs.writeFileSync('./files/output.txt', content);
+
+
+Here the first parameter is file path and second parameter is content we can to write to the file.
+This will write content to that file. Even if that file is not present, node will reate that file inthe file path and write the content to that file.
+
+-----
+
+const fs = require('fs');
+
+// ./ - current directory.
+let textIn = fs.readFileSync('./files/input.txt', 'utf-8')
+console.log(textIn)
+
+let content = `Data read from input.txt: ${textIn}. \nDate created ${new Date()}`
+fs.writeFileSync('./files/output.txt', content);
+
+
+
+--------------------------------------------------------
+
+Read and write files asynchronously
+----------------------------------- 
+
+
+-> Reading file
+----------------
+
+const fs = require('fs');
+
+fs.readFile('./files/start.txt', 'utf-8', (error, data)=>{
+    console.log(data)
+    fs.readFile(`./files/${data}.txt`, 'utf-8', (error2, data2) => {
+        console.log(data2)
+    })
+})
+console.log('Reading file......')
+
+Here at 'first reading file...' will be executed first, then the first readFile method wil be executed and then the second readFile method will be executed.
+
+
+-> Writing file
+---------------
+fs.writeFile('./files/output.txt', `${data2}\n\n${data3}\n\n${new Date()}`, ()=>{
+                console.log("File written successfully...!!!")
+            })
+            
+-----
+
+const fs = require('fs');
+
+fs.readFile('./files/start.txt', 'utf-8', (error, data)=>{
+    console.log(data)
+    fs.readFile(`./files/${data}.txt`, 'utf-8', (error2, data2) => {
+        console.log(data2)
+        fs.readFile('./files/append.txt', 'utf-8', (error3, data3) => {
+            console.log(data3)
+            fs.writeFile('./files/output.txt', `${data2}\n\n${data3}\n\n${new Date()}`, ()=>{
+                console.log("File written successfully...!!!")
+            })
+        })
+    })
+})
+console.log('Reading file......')
+
+This is the full code of reading and writing file.
+-------------------------------------------------------------
+
+Streams
+-------
+
+If we want to read a file, we use readFile method. When we use a readFile method to read a file, a buffer is created. From the source file the content id read at the read buffer, allthe content is available for us to read.
+
+If we want to write the data in the data variable to another file, we need to use writeFile method.
+A buffer is creeated and all the data is written in the buffer and from the buffer all the data is written to the destination file. All this happens at once.
+
+
+- With streams we can process data piece by piece instead of reading or writing the whole data at once. We are reading a chunk of data, storing it in the memory, and we are using it and then we are freeing the memory. This process is repeated until whole the file is processed.
+
+Advantage
+---------
+- Streaaming makes the data processing more efficient in terms of memory.Because there is no need to keep all the data in the memory.
+- In terms of performance and time also, streaming has its advantage becausr we can start processing the data as soon as the first chunk of data arrives.
+
+Types of streams:
+-----------------
+- Readable Stream
+  The readable streams are the one from where we can read or consume data chunk by chunk.
+  
+  Eg: 
+  - Request stream: When we send a request to a server a readable stream is opened. Through that readable stream we get the request data in chunks.
+  - Read file stream: We can read a file piece by piecce by using the createReadStream from the fs module.
+  
+  Important readable stream event:
+  data & end
+  data event is emitted when there is new piece or new chunk of data to consume.
+  end event is emitted as soon as there is no more data to consume.
+  
+  Important readable stream methods:
+  read & pipe
+  
+- Writable Stream: The writable streams are the one to which we can write data chunk by chunk. Its opposite of readable stream.
+
+  Eg:
+  Response stream
+  Write file stream
+  
+  Important readable stream events:
+  drain & finish
+  
+  Important readable stream methods:
+  write and end
+
+- Duplex Stream 
+  Duplex stream is a simply a stream that is both readable and writable at the same time.
+  eg: Web socket
+
+- Transform Stream
+  Transform streams are duplex streams which can also modify or transform data as it is read or write.
+  Eg: zlib(to compress data)
+
+----------------------------------------------------------
+
+Understanding streams in practice
+---------------------------------
+
+server.on('request', (req, res) => {
+    fs.readFile('./files/large-file.txt', (err, data) => {
+        res.end(data)
+    })
+})
+
+We can read files using this method.But the problem is the node here has to load the entire data into the memory.
+
+To solve this we have to use readable and writable stream:-
+
+server.on('request', (req, res) => {
+    let rs = fs.createReadStream('./files/large-file.txt');
+    
+    rs.on('data', (chunk) => {
+        res.write(chunk)
+        res.end();
+    })
+
+    
+})
+
+When this readable stream starts reading data from that file then it is going to read that data in chunks. Everytime it reads new chunk of data it is going to emit a data event. So to take that event we used, 
+rs.on('data', (chunk) => {
+        res.write(chunk)
+        res.end();
+    })
+
+res.end() tells that everything has finished writing and nothing left to write and it will close the response stream.
+
+One benefit is that, whenever a new piece of data is fetched, only that piece of data is only stored in the memory. And then it will be send inthe response. And once we have send in the response that data in the emory will be removed.
+
+Another benifits is user here do not have to wait until the full data is rend as response. Once a iece of data is send fetched then that will be send to the user as response.
+
+-----
+const http = require('http')
+const fs = require('fs')
+
+const server = http.createServer();
+
+
+
+server.listen(3000, '127.0.0.1', () => {
+    console.log('Server has started');
+})
+
+server.on('request', (req, res) => {
+    let rs = fs.createReadStream('./files/large-file.txt');
+    
+    rs.on('data', (chunk) => {
+        res.write(chunk)
+    })
+    
+    //saying we have no more data to write in the response stream
+    rs.on('end', ()=>{
+        res.end()
+    })
+    
+    //handling error
+    rs.on('error', (error) => {
+        res.end(error.message);
+    })  
+})
+-----
+-----------------------------------------------------------
+pipe()
+------
+The above method has a problem.
+If Our readable stream is reading the data at 4mbps and our writable stream is writing the data at 3 mbps. So here our readable stream is little faster than our writable stream and this will overwhelm our writable stream and it cannot handle all this incoming data so fast. This is known as back pressure.
+To solve this problem we can use pipe method.
+
+Back pressure in streams refers to a condition where the rate of flow of data in a stream is being impeded or slowed down due to various factors. This term is commonly used in the context of computer science, especially in software systems dealing with streams of data, such as network communication, file I/O, or data processing pipelines. 
+
+
+server.on('request', (req, res) => {
+    let rs = fs.createReadStream('./files/large-file.txt');
+    //pipe method is only available in readable stream
+    //pipe method allows us to pipe the output of a readable stream to the input of a writable stream
+    //in our case our writable stream is res.
+    rs.pipe(res)
+})
+
+syntax: readableSource.pipe(writableDestination)
+
+---------------------------------------------------------------
+Route parameters
+----------------
+
+
+app.get('/api/products/:id', (req, res) => {
+    console.log(req.params)
+    res.send(req.params)
+})
+
+'/api/products/:id' - this is how we specify the route for route parameters.
+req.params - this is how we take that route parameter.
+---------------------------------------------------------------
+param middleware
+----------------
+
+const express = require('express');
+const app = express();
+
+// Param middleware to validate ID parameter
+app.param('id', (req, res, next, value) => {
+  if (!/^\d+$/.test(value)) {
+    return res.status(400).send('Invalid ID format');
+  }
+  next(); // Proceed if valid
+});
+
+
+Param middleware allows you to execute code only when a specific route parameter is present in the URL of an Express application. This provides a targeted way to handle logic related to dynamic route segments in your URLs.
+
+---------------------------------------------------------------
+Chaining of middleware
+----------------------
+
+router.route('/')
+    .post(moviesController.validateBody, moviesController.addMovie)
+
+//chaining of middlewares. Here this middleware will be executed in the order in which it is defined here
+
+//Here the first middleware in post method is for validation and the second parameter is for adding movie data.
+
+---------------------------------------------------------------
+
+
+
+
 
 
 
